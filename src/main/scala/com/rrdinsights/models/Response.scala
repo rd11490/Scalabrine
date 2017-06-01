@@ -22,10 +22,11 @@ private[models] trait ResultSetRawResponseConverters {
 
   protected def converterOfOpt(name: String): Option[ResultSetRawResponseConverter[_]] = converters.find(_.name == name)
 
-  protected def convert[T <: ConvertedResultSetResponse](rawResponses: Seq[ResultSetResponse], converter: ResultSetRawResponseConverter[T]): Option[Seq[T]] =
+  protected def convert[T <: ConvertedResultSetResponse](rawResponses: Seq[ResultSetResponse], converter: ResultSetRawResponseConverter[T]): Seq[T] =
     rawResponses
       .find(_.name == converter.name)
       .map(v => converter.convertRaw(v.rowSet))
+      .getOrElse(Seq.empty)
 
 }
 

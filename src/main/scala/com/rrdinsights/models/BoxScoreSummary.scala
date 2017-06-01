@@ -322,7 +322,7 @@ private[rrdinsights] object BoxScoreSummaryRawResponse extends ResultSetRawRespo
     TeamSummaryStats(findTeamScoreLine(scoreLines, teamId), findTeamOtherStats(otherStats, teamId))
 
   def toBoxScoreSummary(rawSummary: Array[ResultSetResponse]): BoxScoreSummary = {
-    val gameSummary =  convert[GameSummary](rawSummary, GameSummaryConverter).map(_.head).orElse(new GameSummary())
+    val gameSummary =  convert[GameSummary](rawSummary, GameSummaryConverter).headOpt.orElse(new GameSummary())
 
     val homeTeamId = gameSummary.flatMap(_.homeTeamId)
     val awayTeamId = gameSummary.flatMap(_.awayTeamId)
@@ -332,7 +332,7 @@ private[rrdinsights] object BoxScoreSummaryRawResponse extends ResultSetRawRespo
 
     BoxScoreSummary(
       gameSummary,
-      convert[GameInfo](rawSummary, GameInfoConverter).map(_.head),
+      convert[GameInfo](rawSummary, GameInfoConverter).headOption.getOrElse(GameInfo()),
       toTeamStats(scoreLines, otherStats, homeTeamId),
       toTeamStats(scoreLines, otherStats, awayTeamId),
       convert[Officials](rawSummary, OfficialsConverter),
