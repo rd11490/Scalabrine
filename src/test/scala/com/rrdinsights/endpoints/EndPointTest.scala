@@ -1,12 +1,8 @@
 package com.rrdinsights.endpoints
 
-import com.rrdinsights.TestSpec
-import com.rrdinsights.models.BoxScoreSummaryRawResponse
 import com.rrdinsights.parameters._
-import com.rrdinsights.utils.Control._
-import org.apache.http.impl.client.HttpClientBuilder
-import org.json4s.{DefaultFormats, _}
-import org.json4s.jackson.JsonMethods._
+import com.rrdinsights.{ScalabrineClient, TestSpec}
+import org.json4s.DefaultFormats
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
@@ -25,30 +21,21 @@ final class EndPointTest extends TestSpec {
 
 
   test("boxscore endpoint") {
-
-    implicit val formats = DefaultFormats
     val param = GameIdParameter.newParameterValue(GameID)
     val boxScore = BoxScore(param)
-    val resp = using(HttpClientBuilder.create().setDefaultHeaders(Headers.headers).build()) { client =>
-      val out = BoxScore.parseResponse(boxScore.get(client))
-      client.close()
-      out
-    }
-    val parsed = parse(resp, useBigDecimalForDouble = true)
-    val bsresp = parsed.extract[BoxScoreSummaryRawResponse]
-    val parsedRespose = bsresp.toBoxScoreSummaryResponse
+    val parsedResponse = ScalabrineClient.getBoxScoreSummary(boxScore)
 
     // resource
-    assert(parsedRespose.resource === "boxscoresummary")
+    assert(parsedResponse.resource === "boxscoresummary")
 
     // parameters
-    assert(parsedRespose.parameters.size === 1)
-    assert(parsedRespose.parameters.head === GameIdParameter.newParameterValue("0021601219"))
+    assert(parsedResponse.parameters.size === 1)
+    assert(parsedResponse.parameters.head === GameIdParameter.newParameterValue("0021601219"))
 
     // results
-    assert(parsedRespose.boxScoreSummary.gameSummary.isDefined)
+    assert(parsedResponse.boxScoreSummary.gameSummary.isDefined)
 
-    parsedRespose.boxScoreSummary.gameSummary.foreach(v => {
+    parsedResponse.boxScoreSummary.gameSummary.foreach(v => {
       assert(v.gameDate === "2017-04-12T00:00:00")
       assert(v.gameSequence === 3)
       assert(v.gameId === GameID)
@@ -65,13 +52,13 @@ final class EndPointTest extends TestSpec {
       assert(v.whStatus === 1)
     })
 
-    parsedRespose.boxScoreSummary.gameInfo.foreach(v => {
+    parsedResponse.boxScoreSummary.gameInfo.foreach(v => {
       assert(v.gameDate === "WEDNESDAY, APRIL 12, 2017")
       assert(v.gameTime === "2:03")
       assert(v.attendance === 18624)
     })
 
-    parsedRespose.boxScoreSummary.officials.foreach(v => {
+    parsedResponse.boxScoreSummary.officials.foreach(v => {
       v.foreach(o => {
         o.firstName match {
           case "Tom" => assert(o.lastName === "Washington")
@@ -82,7 +69,7 @@ final class EndPointTest extends TestSpec {
       })
     })
 
-    parsedRespose.boxScoreSummary.inactivePlayers.foreach(v => {
+    parsedResponse.boxScoreSummary.inactivePlayers.foreach(v => {
       assert(v.size === 4)
       val inactivePlayer = v.find(_.playerId === 203114).getOrElse(fail(s"Player 203114 (Kris Middleton) not found"))
       assert(inactivePlayer.firstName === "Khris")
@@ -94,7 +81,7 @@ final class EndPointTest extends TestSpec {
       assert(inactivePlayer.teamId === 1610612749)
     })
 
-    parsedRespose.boxScoreSummary.awayStats.scoreLine.foreach(v => {
+    parsedResponse.boxScoreSummary.awayStats.scoreLine.foreach(v => {
       assert(v.gameId === GameID)
       assert(v.gameDateTimeEST === "2017-04-12T00:00:00")
       assert(v.gameSequence === 3)
@@ -120,7 +107,7 @@ final class EndPointTest extends TestSpec {
       assert(v.ot10Points === 0)
     })
 
-    parsedRespose.boxScoreSummary.awayStats.otherStats.foreach(v => {
+    parsedResponse.boxScoreSummary.awayStats.otherStats.foreach(v => {
       assert(v.leagueId === LeagueIdParameter.NBA.value)
       assert(v.teamId === TeamIdParameter.MilwaukeeBucks.value.toInt)
       assert(v.teamAbbreviation === AwayTeamAbbreviation)
@@ -137,7 +124,7 @@ final class EndPointTest extends TestSpec {
       assert(v.pointsOffTurnOvers === 20)
     })
 
-    parsedRespose.boxScoreSummary.homeStats.scoreLine.foreach(v => {
+    parsedResponse.boxScoreSummary.homeStats.scoreLine.foreach(v => {
       assert(v.gameId === GameID)
       assert(v.gameDateTimeEST === "2017-04-12T00:00:00")
       assert(v.gameSequence === 3)
@@ -163,7 +150,7 @@ final class EndPointTest extends TestSpec {
       assert(v.ot10Points === 0)
     })
 
-    parsedRespose.boxScoreSummary.homeStats.otherStats.foreach(v => {
+    parsedResponse.boxScoreSummary.homeStats.otherStats.foreach(v => {
       assert(v.leagueId === LeagueIdParameter.NBA.value)
       assert(v.teamId === TeamIdParameter.BostonCeltics.value.toInt)
       assert(v.teamAbbreviation === HomeTeamAbbreviation)
@@ -180,7 +167,7 @@ final class EndPointTest extends TestSpec {
       assert(v.pointsOffTurnOvers === 10)
     })
 
-    parsedRespose.boxScoreSummary.lastMeeting.foreach(v => {
+    parsedResponse.boxScoreSummary.lastMeeting.foreach(v => {
       assert(v.currentGameId === GameID)
       assert(v.gameId === "0021601113")
       assert(v.gameDateTimeEST === "2017-03-29T00:00:00")
@@ -196,7 +183,7 @@ final class EndPointTest extends TestSpec {
       assert(v.awayTeamPoints === 103)
     })
 
-    parsedRespose.boxScoreSummary.seasonSeries.foreach(v => {
+    parsedResponse.boxScoreSummary.seasonSeries.foreach(v => {
       assert(v.gameId === GameID)
       assert(v.gameDateTimeEST === "2017-04-12T00:00:00")
       assert(v.homeTeamId.toString === TeamIdParameter.BostonCeltics.value)
@@ -207,7 +194,7 @@ final class EndPointTest extends TestSpec {
 
     })
 
-    parsedRespose.boxScoreSummary.availableVideo.foreach(v => {
+    parsedResponse.boxScoreSummary.availableVideo.foreach(v => {
       assert(v.gameId === GameID)
       assert(v.HISTORICAL_STATUS === false)
       assert(v.HUSTLE_STATUS === true)

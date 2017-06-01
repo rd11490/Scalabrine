@@ -10,7 +10,7 @@ private[rrdinsights] trait Response[P <: ParameterResponse] {
 
 private[rrdinsights] trait ParameterResponse
 
-private[models] case class ResultSetResponse(name: String,
+private[rrdinsights] case class ResultSetResponse(name: String,
                                              headers: Array[String],
                                              rowSet: Array[Array[Any]])
 

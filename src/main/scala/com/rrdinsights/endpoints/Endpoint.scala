@@ -20,7 +20,7 @@ sealed trait Endpoint {
   }
 }
 
-private object Endpoint {
+private[rrdinsights] object Endpoint {
   private val BaseUrl: String = "http://stats.nba.com/stats/"
 
   def parseResponse(response: CloseableHttpResponse): String = {
@@ -30,6 +30,9 @@ private object Endpoint {
   }
 }
 
+//
+// Team Info Commons
+//
 final case class TeamInfoCommon(leagueId: ParameterValue = LeagueIdParameter.defaultParameterValue,
                                 season: ParameterValue = SeasonParameter.defaultParameterValue,
                                 seasonType: ParameterValue = SeasonTypeParameter.defaultParameterValue) extends Endpoint {
@@ -38,12 +41,16 @@ final case class TeamInfoCommon(leagueId: ParameterValue = LeagueIdParameter.def
   override val params: Seq[ParameterValue] = Seq(leagueId, season, seasonType)
 }
 
-object TeamInfoCommon {
+private[rrdinsights] object TeamInfoCommon {
   def parseResponse(response: CloseableHttpResponse): String = {
     val respJson = Endpoint.parseResponse(response)
     respJson
   }
 }
+
+//
+// Box Score Summary
+//
 
 final case class BoxScore(gameId: ParameterValue) extends Endpoint {
   override val endpoint: String = "boxscoresummaryv2"
@@ -51,13 +58,16 @@ final case class BoxScore(gameId: ParameterValue) extends Endpoint {
   override def params: Seq[ParameterValue] = Seq(gameId)
 }
 
-object BoxScore {
+private[rrdinsights] object BoxScore {
   def parseResponse(response: CloseableHttpResponse): String = {
     val is = response.getEntity.getContent
     Source.fromInputStream(is).getLines().mkString(" ")
   }
 }
 
+//
+// Advanced Box Score
+//
 final case class AdvancedBoxScore(gameId: ParameterValue,
                                   startPeriod: ParameterValue = StartPeriodParameter.defaultParameterValue,
                                   endPeriod: ParameterValue = EndPeriodParameter.defaultParameterValue,
@@ -68,6 +78,10 @@ final case class AdvancedBoxScore(gameId: ParameterValue,
 
   override val params: Seq[ParameterValue] = Seq(gameId, startPeriod, endPeriod, startRange, endRange, rangeType)
 }
+
+//
+// Play by Play
+//
 
 final case class PlayByPlay(gameId: ParameterValue,
                             startPeriod: ParameterValue = StartPeriodParameter.defaultParameterValue,

@@ -1,19 +1,30 @@
 package com.rrdinsights
 
-import com.rrdinsights.endpoints.Endpoint
-import com.rrdinsights.models.{ParameterResponse, Response}
-import com.rrdinsights.parameters.ParameterValue
+import com.rrdinsights.endpoints.BoxScore
+import com.rrdinsights.models.{BoxScoreSummaryRawResponse, BoxScoreSummaryResponse}
+import com.rrdinsights.parameters.Headers
+import com.rrdinsights.utils.Control._
+import org.apache.http.impl.client.{CloseableHttpClient, HttpClientBuilder}
+import org.json4s.DefaultFormats
+import org.json4s.jackson.JsonMethods._
 
 /**
   * ScalabrineClient is a scala HTTP client for the stats.nba.com api
   */
 object ScalabrineClient {
+  implicit val formats = DefaultFormats
 
-  private def get[P <: ParameterResponse](endpoint: Endpoint, params: Seq[ParameterValue]): Option[Response[P]] = {
-    //endpoint.get()
-    None
+  private val Client: CloseableHttpClient = HttpClientBuilder.create().setDefaultHeaders(Headers.headers).build()
+
+  def getBoxScoreSummary(boxScore: BoxScore): BoxScoreSummaryResponse = {
+    val resp = using(Client) { client =>
+      BoxScore.parseResponse(boxScore.get(client))
+    }
+
+    parse(resp, useBigDecimalForDouble = true)
+      .extract[BoxScoreSummaryRawResponse]
+      .toBoxScoreSummaryResponse
   }
-
 }
 
 /*
