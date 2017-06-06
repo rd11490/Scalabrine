@@ -3,34 +3,19 @@ package com.rrdinsights.models
 import com.rrdinsights.parameters.{GameIdParameter, ParameterValue}
 import com.rrdinsights.models.Utils._
 
-final case class BoxScoreSummary(gameSummary: GameSummary,
-                           gameInfo: GameInfo,
+final case class BoxScoreSummary(gameSummary: Option[GameSummary],
+                           gameInfo: Option[GameInfo],
                            homeStats: TeamSummaryStats,
                            awayStats: TeamSummaryStats,
                            officials: Seq[Officials],
                            inactivePlayers: Seq[InactivePlayers],
-                           lastMeeting: LastMeeting,
-                           seasonSeries: SeasonSeries,
-                           availableVideo: AvailableVideo)
+                           lastMeeting: Option[LastMeeting],
+                           seasonSeries: Option[SeasonSeries],
+                           availableVideo: Option[AvailableVideo])
 
 final case class BoxScoreSummaryResponse(resource: String,
                                    parameters: Seq[ParameterValue],
                                    boxScoreSummary: BoxScoreSummary)
-
-final case class BoxScoreSummaryRawResponse(override val resource: String,
-                                      override val parameters: BoxScoreSummaryParameterRawResponse,
-                                      override val resultSets: Array[ResultSetResponse])
-  extends Response[BoxScoreSummaryParameterRawResponse] {
-
-  def toBoxScoreSummaryResponse: BoxScoreSummaryResponse =
-    BoxScoreSummaryResponse(resource, parameters.toParameterValues, toBoxScoreSummary)
-
-  def toBoxScoreSummary: BoxScoreSummary = BoxScoreSummaryRawResponse.toBoxScoreSummary(resultSets)
-}
-
-final case class BoxScoreSummaryParameterRawResponse(GameID: String) extends ParameterResponse {
-  val toParameterValues: Seq[ParameterValue] = Seq(GameIdParameter.newParameterValue(GameID))
-}
 
 
 final case class GameSummary(gameDate: Option[String] = None,
@@ -302,44 +287,53 @@ private[rrdinsights] case object AvailableVideoConverter extends ResultSetRawRes
         transformToInt(row(6)).contains(1)))
 }
 
+final case class BoxScoreSummaryRawResponse(override val resource: String,
+                                            override val parameters: BoxScoreSummaryParameterRawResponse,
+                                            override val resultSets: Array[ResultSetResponse])
+  extends Response[BoxScoreSummaryParameterRawResponse] {
+
+  def toBoxScoreSummaryResponse: BoxScoreSummaryResponse =
+    BoxScoreSummaryResponse(resource, parameters.toParameterValues, toBoxScoreSummary)
+
+  def toBoxScoreSummary: BoxScoreSummary = BoxScoreSummaryRawResponse.toBoxScoreSummary(resultSets)
+}
+
+final case class BoxScoreSummaryParameterRawResponse(GameID: String) extends ParameterResponse {
+  val toParameterValues: Seq[ParameterValue] = Seq(GameIdParameter.newParameterValue(GameID))
+}
+
 private[rrdinsights] object BoxScoreSummaryRawResponse extends ResultSetRawResponseConverters {
 
-  private[rrdinsights] def findTeamScoreLine(scoreLines: Option[Seq[ScoreLine]], teamId: Option[Int]): Option[ScoreLine] = {
-    (scoreLines, teamId) match {
-      case (Some(sl), Some(id)) => sl.find(_.teamId == id)
-      case _ => None
-    }
-  }
+  private[rrdinsights] def findTeamScoreLine(scoreLines: Seq[ScoreLine], teamId: Option[Int]): Option[ScoreLine] =
+    teamId.flatMap(v => scoreLines.find(_.teamId == v))
 
-  private[rrdinsights] def findTeamOtherStats(otherStats: Option[Seq[OtherStats]], teamId: Option[Int]): Option[OtherStats] = {
-    (otherStats, teamId) match {
-      case (Some(ot), Some(id)) => ot.find(_.teamId == id)
-      case _ => None
-    }
-  }
+  private[rrdinsights] def findTeamOtherStats(otherStats: Seq[OtherStats], teamId: Option[Int]): Option[OtherStats] =
+    teamId.flatMap(v => otherStats.find(_.teamId == v))
 
-  private[rrdinsights] def toTeamStats(scoreLines: Option[Seq[ScoreLine]], otherStats: Option[Seq[OtherStats]], teamId: Option[Int]): TeamSummaryStats =
+  private[rrdinsights] def toTeamStats(scoreLines: Seq[ScoreLine], otherStats: Seq[OtherStats], teamId: Option[Int]): TeamSummaryStats = {
     TeamSummaryStats(findTeamScoreLine(scoreLines, teamId), findTeamOtherStats(otherStats, teamId))
+  }
+
 
   def toBoxScoreSummary(rawSummary: Array[ResultSetResponse]): BoxScoreSummary = {
-    val gameSummary =  convert[GameSummary](rawSummary, GameSummaryConverter).headOpt.orElse(new GameSummary())
-
-    val homeTeamId = gameSummary.flatMap(_.homeTeamId)
-    val awayTeamId = gameSummary.flatMap(_.awayTeamId)
+    val gameSummary =  convert[GameSummary](rawSummary, GameSummaryConverter).headOption
 
     val scoreLines = convert[ScoreLine](rawSummary, ScoreLineConverter)
     val otherStats = convert[OtherStats](rawSummary, OtherStatsConverter)
 
+    val homeTeamId = gameSummary.flatMap(_.homeTeamId)
+    val awayTeamId = gameSummary.flatMap(_.awayTeamId)
+
     BoxScoreSummary(
       gameSummary,
-      convert[GameInfo](rawSummary, GameInfoConverter).headOption.getOrElse(GameInfo()),
+      convert[GameInfo](rawSummary, GameInfoConverter).headOption,
       toTeamStats(scoreLines, otherStats, homeTeamId),
       toTeamStats(scoreLines, otherStats, awayTeamId),
       convert[Officials](rawSummary, OfficialsConverter),
       convert[InactivePlayers](rawSummary, InactivePlayersConverter),
-      convert[LastMeeting](rawSummary, LastMeetingConverter).map(_.head),
-      convert[SeasonSeries](rawSummary, SeasonSeriesConverter).map(_.head),
-      convert[AvailableVideo](rawSummary, AvailableVideoConverter).map(_.head))
+      convert[LastMeeting](rawSummary, LastMeetingConverter).headOption,
+      convert[SeasonSeries](rawSummary, SeasonSeriesConverter).headOption,
+      convert[AvailableVideo](rawSummary, AvailableVideoConverter).headOption)
   }
 
   override protected val converters: Seq[ResultSetRawResponseConverter[_]] =

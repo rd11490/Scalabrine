@@ -58,13 +58,6 @@ final case class BoxScore(gameId: ParameterValue) extends Endpoint {
   override def params: Seq[ParameterValue] = Seq(gameId)
 }
 
-private[rrdinsights] object BoxScore {
-  def parseResponse(response: CloseableHttpResponse): String = {
-    val is = response.getEntity.getContent
-    Source.fromInputStream(is).getLines().mkString(" ")
-  }
-}
-
 //
 // Advanced Box Score
 //
