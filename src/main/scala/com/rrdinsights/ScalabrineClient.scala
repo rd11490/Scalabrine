@@ -5,8 +5,9 @@ import com.rrdinsights.models._
 import com.rrdinsights.parameters.Headers
 import org.apache.http.client.methods.CloseableHttpResponse
 import org.apache.http.impl.client.HttpClientBuilder
-import org.json4s.DefaultFormats
+import org.json4s.{DefaultFormats, JValue}
 import org.json4s.jackson.JsonMethods._
+import com.rrdinsights.utils.Control._
 
 import scala.io.Source
 
@@ -16,24 +17,24 @@ import scala.io.Source
 object ScalabrineClient {
   implicit val formats = DefaultFormats
 
-  private val Client = HttpClientBuilder.create().setDefaultHeaders(Headers.headers).build()
+  private def get[E <: Endpoint](endpoint: E): JValue = {
+    using(HttpClientBuilder.create().setDefaultHeaders(Headers.headers).build()) { client =>
+      val resp = endpoint.get(client)
+      val parsed = parse(parseResponse(resp), useBigDecimalForDouble = true)
+      resp.close()
+      parsed
+    }
+  }
 
-  private def get[E <: Endpoint](endpoint: E): CloseableHttpResponse =
-    endpoint.get(Client)
 
   def getBoxScoreSummary(boxScore: BoxScore): BoxScoreSummaryResponse = {
-    val resp = get[BoxScore](boxScore)
-    val parsed = parse(parseResponse(resp), useBigDecimalForDouble = true)
+    get[BoxScore](boxScore)
       .extract[BoxScoreSummaryRawResponse]
       .toBoxScoreSummaryResponse
-    resp.close()
-    parsed
   }
 
   def getAdvancedBoxScore(boxScore: AdvancedBoxScore): BoxScoreAdvancedResponse = {
-    val resp = get[AdvancedBoxScore](boxScore)
-
-    parse(parseResponse(resp), useBigDecimalForDouble = true)
+    get[AdvancedBoxScore](boxScore)
       .extract[BoxScoreAdvancedRawResponse]
       .toBoxScoreAdvancedResponse
   }
