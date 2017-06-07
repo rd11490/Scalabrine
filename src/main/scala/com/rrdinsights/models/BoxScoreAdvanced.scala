@@ -12,7 +12,8 @@ final case class BoxScoreAdvancedResponse(resource: String,
                                           parameters: Seq[ParameterValue],
                                           boxScoreAdvanced: BoxScoreAdvanced)
 
-final case class TeamStats(teamId: Option[Int],
+final case class TeamStats(gameId: Option[String],
+                           teamId: Option[Int],
                            teamName: Option[String],
                            teamAbbreviation: Option[String],
                            teamCity: Option[String],
@@ -38,12 +39,12 @@ private[rrdinsights] case object TeamStatsConverter extends ResultSetRawResponse
   override def convertRaw(rows: Array[Array[Any]]): Seq[TeamStats] =
     rows.map(row =>
       TeamStats(
-        transformToInt(row(0)),
-        transformToString(row(1)),
+        transformToString(row(0)),
+        transformToInt(row(1)),
         transformToString(row(2)),
         transformToString(row(3)),
-        transformToDouble(row(4)),
-        transformToDouble(row(5)),
+        transformToString(row(4)),
+        transformToString(row(5)).map(Utils.convertMinutesToDouble),
         transformToDouble(row(6)),
         transformToDouble(row(7)),
         transformToDouble(row(8)),
@@ -55,14 +56,15 @@ private[rrdinsights] case object TeamStatsConverter extends ResultSetRawResponse
         transformToDouble(row(14)),
         transformToDouble(row(15)),
         transformToDouble(row(16)),
-        transformToDouble(row(17))))
+        transformToDouble(row(17)),
+        transformToDouble(row(18))))
 }
 
 final case class PlayerStats(gameId: Option[String],
                              teamId: Option[Int],
                              teamAbbreviation: Option[String],
                              teamCity: Option[String],
-                             playerId: Option[String],
+                             playerId: Option[Int],
                              playerName: Option[String],
                              startPosition: Option[String],
                              comment: Option[String],
@@ -93,11 +95,11 @@ private[rrdinsights] case object PlayerStatsConverter extends ResultSetRawRespon
         transformToInt(row(1)),
         transformToString(row(2)),
         transformToString(row(3)),
-        transformToString(row(4)),
+        transformToInt(row(4)),
         transformToString(row(5)),
         transformToString(row(6)),
         transformToString(row(7)),
-        transformToDouble(row(8)),
+        transformToString(row(8)).map(Utils.convertMinutesToDouble),
         transformToDouble(row(9)),
         transformToDouble(row(10)),
         transformToDouble(row(11)),

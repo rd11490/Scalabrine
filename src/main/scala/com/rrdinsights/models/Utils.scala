@@ -14,4 +14,11 @@ private[models] object Utils {
 
   def transformToDouble(value: Any): Option[Double] =
     transformToT[BigDecimal](value).map(_.doubleValue())
+
+  def convertMinutesToDouble(time: String): Double ={
+    val splitTime = time.split(":")
+    val min = splitTime(0).toDouble
+    val sec = splitTime(1).toDouble/60.0
+    min+sec
+  }
 }

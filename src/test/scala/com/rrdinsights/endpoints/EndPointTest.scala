@@ -202,23 +202,26 @@ final class EndPointTest extends TestSpec {
     })
   }
 
-  /*
   test("boxscore advanced endpoint") {
     val param = GameIdParameter.newParameterValue(GameID)
     val boxScore = AdvancedBoxScore(param)
     val parsedResponse = ScalabrineClient.getAdvancedBoxScore(boxScore)
 
     // resource
-    assert(parsedResponse.resource === "boxscoresummary")
+    assert(parsedResponse.resource === "boxscore")
 
     // parameters
-    assert(parsedResponse.parameters.size === 1)
+    assert(parsedResponse.parameters.size === 6)
     assert(parsedResponse.parameters.head === GameIdParameter.newParameterValue("0021601219"))
 
     // results
     assert(parsedResponse.boxScoreAdvanced.playerStats.nonEmpty)
+    parsedResponse.boxScoreAdvanced.playerStats.foreach(v => {
+      println(v.playerName)
+      println(v.minutes)
+      println()
+    })
     assert(parsedResponse.boxScoreAdvanced.teamStats.nonEmpty)
 
   }
-  */
 }
