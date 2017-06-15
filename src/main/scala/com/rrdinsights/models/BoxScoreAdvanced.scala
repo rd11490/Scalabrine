@@ -23,8 +23,10 @@ final case class TeamStats(gameId: Option[String],
                            netRating: Option[Double],
                            assistPercentage: Option[Double],
                            assistTurnOverRatio: Option[Double],
+                           assistRatio: Option[Double],
                            offensiveReboundPercentage: Option[Double],
                            defensiveReboundPercentage: Option[Double],
+                           reboundPercentage: Option[Double],
                            teamTurnOverPercentage: Option[Double],
                            effectiveFieldGoalPercentage: Option[Double],
                            trueShootingPercentage: Option[Double],
@@ -57,7 +59,9 @@ private[rrdinsights] case object TeamStatsConverter extends ResultSetRawResponse
         transformToDouble(row(15)),
         transformToDouble(row(16)),
         transformToDouble(row(17)),
-        transformToDouble(row(18))))
+        transformToDouble(row(18)),
+        transformToDouble(row(19)),
+        transformToDouble(row(20))))
 }
 
 final case class PlayerStats(gameId: Option[String],
