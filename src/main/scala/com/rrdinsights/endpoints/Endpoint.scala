@@ -84,6 +84,18 @@ final case class PlayByPlayEndpoint(gameId: ParameterValue,
   override val params: Seq[ParameterValue] = Seq(gameId, startPeriod, endPeriod)
 }
 
+final case class TeamGameLog(teamId: ParameterValue,
+                             seasonTypeParameter: ParameterValue = SeasonTypeParameter.defaultParameterValue,
+                             season: ParameterValue = SeasonTypeParameter.defaultParameterValue,
+                             leagueID: ParameterValue = LeagueIdParameter.defaultParameterValue,
+                             dateFrom: ParameterValue = DateFromParameter.defaultParameterValue,
+                             dateTo: ParameterValue = DateToParameter.defaultParameterValue) extends Endpoint {
+
+  override val endpoint: String = "teamgamelog"
+
+  override val  params: Seq[ParameterValue] = Seq(teamId, seasonTypeParameter, season, leagueID, dateFrom, dateTo)
+}
+
 /*
 GET /data/10s/v2015/json/mobile_teams/nba/2016/scores/gamedetail/0041600223_gamedetail.json HTTP/1.1
 Host: data.nba.com
