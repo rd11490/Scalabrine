@@ -1,6 +1,6 @@
 package com.rrdinsights
 
-import com.rrdinsights.endpoints.{AdvancedBoxScore, BoxScore, Endpoint}
+import com.rrdinsights.endpoints.{AdvancedBoxScoreEndpoint, BoxScoreEndpoint, Endpoint, PlayByPlayEndpoint}
 import com.rrdinsights.models._
 import com.rrdinsights.parameters.Headers
 import org.apache.http.client.methods.CloseableHttpResponse
@@ -27,16 +27,22 @@ object ScalabrineClient {
   }
 
 
-  def getBoxScoreSummary(boxScore: BoxScore): BoxScoreSummaryResponse = {
-    get[BoxScore](boxScore)
+  def getBoxScoreSummary(boxScore: BoxScoreEndpoint): BoxScoreSummaryResponse = {
+    get[BoxScoreEndpoint](boxScore)
       .extract[BoxScoreSummaryRawResponse]
       .toBoxScoreSummaryResponse
   }
 
-  def getAdvancedBoxScore(boxScore: AdvancedBoxScore): BoxScoreAdvancedResponse = {
-    get[AdvancedBoxScore](boxScore)
+  def getAdvancedBoxScore(boxScore: AdvancedBoxScoreEndpoint): BoxScoreAdvancedResponse = {
+    get[AdvancedBoxScoreEndpoint](boxScore)
       .extract[BoxScoreAdvancedRawResponse]
       .toBoxScoreAdvancedResponse
+  }
+
+  def getPlayByPlay(playByPlay: PlayByPlayEndpoint): PlayByPlayResponse = {
+    get[PlayByPlayEndpoint](playByPlay)
+      .extract[PlayByPlayRawResponse]
+      .toPlayByPlayResponse
   }
 
 

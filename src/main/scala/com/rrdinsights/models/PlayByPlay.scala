@@ -28,7 +28,7 @@ final case class PlayByPlayEvent(gameId: Option[String],
                                  player1Type: Option[Int], // TODO - find out what this means
                                  player1Id: Option[Int],
                                  player1Name: Option[String],
-                                 player1TeamId: Option[String],
+                                 player1TeamId: Option[Int],
                                  player1TeamCity: Option[String],
                                  player1TeamNickname: Option[String],
                                  player1TeamAbbreviation: Option[String],
@@ -36,7 +36,7 @@ final case class PlayByPlayEvent(gameId: Option[String],
                                  player2Type: Option[Int], // TODO - find out what this means
                                  player2Id: Option[Int],
                                  player2Name: Option[String],
-                                 player2TeamId: Option[String],
+                                 player2TeamId: Option[Int],
                                  player2TeamCity: Option[String],
                                  player2TeamNickname: Option[String],
                                  player2TeamAbbreviation: Option[String],
@@ -44,7 +44,7 @@ final case class PlayByPlayEvent(gameId: Option[String],
                                  player3Type: Option[Int], // TODO - find out what this means
                                  player3Id: Option[Int],
                                  player3Name: Option[String],
-                                 player3TeamId: Option[String],
+                                 player3TeamId: Option[Int],
                                  player3TeamCity: Option[String],
                                  player3TeamNickname: Option[String],
                                  player3TeamAbbreviation: Option[String]) extends ConvertedResultSetResponse
@@ -74,7 +74,7 @@ private[rrdinsights] case object PlayByPlayEventConverter extends ResultSetRawRe
         transformToInt(row(12)),
         transformToInt(row(13)),
         transformToString(row(14)),
-        transformToString(row(15)),
+        transformToInt(row(15)),
         transformToString(row(16)),
         transformToString(row(17)),
         transformToString(row(18)),
@@ -82,7 +82,7 @@ private[rrdinsights] case object PlayByPlayEventConverter extends ResultSetRawRe
         transformToInt(row(12)),
         transformToInt(row(13)),
         transformToString(row(14)),
-        transformToString(row(15)),
+        transformToInt(row(15)),
         transformToString(row(16)),
         transformToString(row(17)),
         transformToString(row(18)),
@@ -90,7 +90,7 @@ private[rrdinsights] case object PlayByPlayEventConverter extends ResultSetRawRe
         transformToInt(row(12)),
         transformToInt(row(13)),
         transformToString(row(14)),
-        transformToString(row(15)),
+        transformToInt(row(15)),
         transformToString(row(16)),
         transformToString(row(17)),
         transformToString(row(18)))
@@ -105,3 +105,33 @@ private[rrdinsights] case object PlayByPlayEventConverter extends ResultSetRawRe
 
 private case class Score(homeScore: Option[Int], awayScore: Option[Int])
 
+
+final case class PlayByPlayParameterRawResponse(GameID: String,
+                                                StartPeriod: Long,
+                                                EndPeriod: Long) extends ParameterResponse {
+  val toParameterValues: Seq[ParameterValue] = Seq(
+    GameIdParameter.newParameterValue(GameID),
+    StartPeriodParameter.newParameterValue(StartPeriod.toString),
+    EndPeriodParameter.newParameterValue(EndPeriod.toString))
+}
+
+final case class PlayByPlayRawResponse(override val resource: String,
+                                             override val parameters: PlayByPlayParameterRawResponse,
+                                             override val resultSets: Array[ResultSetResponse])
+  extends Response[PlayByPlayParameterRawResponse] {
+
+  def toPlayByPlayResponse: PlayByPlayResponse =
+    PlayByPlayResponse(resource, parameters.toParameterValues, toPlayByPlay)
+
+  def toPlayByPlay: PlayByPlay = PlayByPlayRawResponse.toPlayByPlay(resultSets)
+}
+
+private[rrdinsights] object PlayByPlayRawResponse extends ResultSetRawResponseConverters {
+
+
+  def toPlayByPlay(rawSummary: Array[ResultSetResponse]): PlayByPlay =
+    PlayByPlay(convert[PlayByPlayEvent](rawSummary, PlayByPlayEventConverter))
+
+  override protected val converters: Seq[ResultSetRawResponseConverter[_]] =
+    Seq(PlayByPlayEventConverter)
+}

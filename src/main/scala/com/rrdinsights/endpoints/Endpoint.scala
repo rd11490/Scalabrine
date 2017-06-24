@@ -52,7 +52,7 @@ private[rrdinsights] object TeamInfoCommon {
 // Box Score Summary
 //
 
-final case class BoxScore(gameId: ParameterValue) extends Endpoint {
+final case class BoxScoreEndpoint(gameId: ParameterValue) extends Endpoint {
   override val endpoint: String = "boxscoresummaryv2"
 
   override def params: Seq[ParameterValue] = Seq(gameId)
@@ -61,12 +61,12 @@ final case class BoxScore(gameId: ParameterValue) extends Endpoint {
 //
 // Advanced Box Score
 //
-final case class AdvancedBoxScore(gameId: ParameterValue,
-                                  startPeriod: ParameterValue = StartPeriodParameter.defaultParameterValue,
-                                  endPeriod: ParameterValue = EndPeriodParameter.defaultParameterValue,
-                                  startRange: ParameterValue = StartRangeParameter.defaultParameterValue,
-                                  endRange: ParameterValue = EndRangeParameter.defaultParameterValue,
-                                  rangeType: ParameterValue = RangeTypeParameter.defaultParameterValue) extends Endpoint {
+final case class AdvancedBoxScoreEndpoint(gameId: ParameterValue,
+                                          startPeriod: ParameterValue = StartPeriodParameter.defaultParameterValue,
+                                          endPeriod: ParameterValue = EndPeriodParameter.defaultParameterValue,
+                                          startRange: ParameterValue = StartRangeParameter.defaultParameterValue,
+                                          endRange: ParameterValue = EndRangeParameter.defaultParameterValue,
+                                          rangeType: ParameterValue = RangeTypeParameter.defaultParameterValue) extends Endpoint {
   override val endpoint: String = "boxscoreadvancedv2"
 
   override val params: Seq[ParameterValue] = Seq(gameId, startPeriod, endPeriod, startRange, endRange, rangeType)
@@ -76,10 +76,10 @@ final case class AdvancedBoxScore(gameId: ParameterValue,
 // Play by Play
 //
 
-final case class PlayByPlay(gameId: ParameterValue,
-                            startPeriod: ParameterValue = StartPeriodParameter.defaultParameterValue,
-                            endPeriod: ParameterValue = EndRangeParameter.defaultParameterValue) extends Endpoint {
-  override val endpoint: String = "playByPlay"
+final case class PlayByPlayEndpoint(gameId: ParameterValue,
+                                    startPeriod: ParameterValue = StartPeriodParameter.defaultParameterValue,
+                                    endPeriod: ParameterValue = EndPeriodParameter.defaultParameterValue) extends Endpoint {
+  override val endpoint: String = "playByPlayv2"
 
   override val params: Seq[ParameterValue] = Seq(gameId, startPeriod, endPeriod)
 }
