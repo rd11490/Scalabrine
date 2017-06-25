@@ -33,15 +33,15 @@ private[rrdinsights] object Endpoint {
 //
 // Team Info Commons
 //
-final case class TeamInfoCommon(leagueId: ParameterValue = LeagueIdParameter.defaultParameterValue,
-                                season: ParameterValue = SeasonParameter.defaultParameterValue,
-                                seasonType: ParameterValue = SeasonTypeParameter.defaultParameterValue) extends Endpoint {
+final case class TeamInfoCommonEndpoint(leagueId: ParameterValue = LeagueIdParameter.defaultParameterValue,
+                                        season: ParameterValue = SeasonParameter.defaultParameterValue,
+                                        seasonType: ParameterValue = SeasonTypeParameter.defaultParameterValue) extends Endpoint {
   override val endpoint: String = "teaminfocommon"
 
   override val params: Seq[ParameterValue] = Seq(leagueId, season, seasonType)
 }
 
-private[rrdinsights] object TeamInfoCommon {
+private[rrdinsights] object TeamInfoCommonEndpoint {
   def parseResponse(response: CloseableHttpResponse): String = {
     val respJson = Endpoint.parseResponse(response)
     respJson
@@ -84,7 +84,7 @@ final case class PlayByPlayEndpoint(gameId: ParameterValue,
   override val params: Seq[ParameterValue] = Seq(gameId, startPeriod, endPeriod)
 }
 
-final case class TeamGameLog(teamId: ParameterValue,
+final case class TeamGameLogEndpoint(teamId: ParameterValue,
                              seasonTypeParameter: ParameterValue = SeasonTypeParameter.defaultParameterValue,
                              season: ParameterValue = SeasonTypeParameter.defaultParameterValue,
                              leagueID: ParameterValue = LeagueIdParameter.defaultParameterValue,
