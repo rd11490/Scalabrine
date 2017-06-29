@@ -1,6 +1,6 @@
 package com.rrdinsights
 
-import com.rrdinsights.endpoints.{AdvancedBoxScoreEndpoint, BoxScoreEndpoint, Endpoint, PlayByPlayEndpoint}
+import com.rrdinsights.endpoints._
 import com.rrdinsights.models._
 import com.rrdinsights.parameters.Headers
 import org.apache.http.client.methods.CloseableHttpResponse
@@ -27,11 +27,10 @@ object ScalabrineClient {
   }
 
 
-  def getBoxScoreSummary(boxScore: BoxScoreEndpoint): BoxScoreSummaryResponse = {
+  def getBoxScoreSummary(boxScore: BoxScoreEndpoint): BoxScoreSummaryResponse =
     get[BoxScoreEndpoint](boxScore)
       .extract[BoxScoreSummaryRawResponse]
       .toBoxScoreSummaryResponse
-  }
 
   def getAdvancedBoxScore(boxScore: AdvancedBoxScoreEndpoint): BoxScoreAdvancedResponse = {
     get[AdvancedBoxScoreEndpoint](boxScore)
@@ -39,18 +38,20 @@ object ScalabrineClient {
       .toBoxScoreAdvancedResponse
   }
 
-  def getPlayByPlay(playByPlay: PlayByPlayEndpoint): PlayByPlayResponse = {
+  def getPlayByPlay(playByPlay: PlayByPlayEndpoint): PlayByPlayResponse =
     get[PlayByPlayEndpoint](playByPlay)
       .extract[PlayByPlayRawResponse]
       .toPlayByPlayResponse
-  }
 
+  def getTeamGameLog(teamGameLog: TeamGameLogEndpoint): TeamGameLogResponse =
+    get[TeamGameLogEndpoint](teamGameLog)
+    .extract[TeamGameLogRawResponse]
+    .toTeamGameLogResponse
 
   private def parseResponse(response: CloseableHttpResponse): String = {
     val is = response.getEntity.getContent
     Source.fromInputStream(is).getLines().mkString(" ")
   }
-
 
 }
 

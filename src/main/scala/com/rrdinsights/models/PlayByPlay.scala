@@ -79,21 +79,21 @@ private[rrdinsights] case object PlayByPlayEventConverter extends ResultSetRawRe
         transformToString(row(17)),
         transformToString(row(18)),
 
-        transformToInt(row(12)),
-        transformToInt(row(13)),
-        transformToString(row(14)),
-        transformToInt(row(15)),
-        transformToString(row(16)),
-        transformToString(row(17)),
-        transformToString(row(18)),
+        transformToInt(row(19)),
+        transformToInt(row(20)),
+        transformToString(row(21)),
+        transformToInt(row(22)),
+        transformToString(row(23)),
+        transformToString(row(24)),
+        transformToString(row(25)),
 
-        transformToInt(row(12)),
-        transformToInt(row(13)),
-        transformToString(row(14)),
-        transformToInt(row(15)),
-        transformToString(row(16)),
-        transformToString(row(17)),
-        transformToString(row(18)))
+        transformToInt(row(26)),
+        transformToInt(row(27)),
+        transformToString(row(28)),
+        transformToInt(row(29)),
+        transformToString(row(30)),
+        transformToString(row(31)),
+        transformToString(row(32)))
     })
 
 

@@ -85,42 +85,16 @@ final case class PlayByPlayEndpoint(gameId: ParameterValue,
 }
 
 final case class TeamGameLogEndpoint(teamId: ParameterValue,
-                             seasonTypeParameter: ParameterValue = SeasonTypeParameter.defaultParameterValue,
-                             season: ParameterValue = SeasonTypeParameter.defaultParameterValue,
-                             leagueID: ParameterValue = LeagueIdParameter.defaultParameterValue,
-                             dateFrom: ParameterValue = DateFromParameter.defaultParameterValue,
-                             dateTo: ParameterValue = DateToParameter.defaultParameterValue) extends Endpoint {
+                                     seasonTypeParameter: ParameterValue = SeasonTypeParameter.defaultParameterValue,
+                                     season: ParameterValue = SeasonParameter.defaultParameterValue,
+                                     leagueID: ParameterValue = LeagueIdParameter.defaultParameterValue,
+                                     dateFrom: ParameterValue = DateFromParameter.defaultParameterValue,
+                                     dateTo: ParameterValue = DateToParameter.defaultParameterValue) extends Endpoint {
 
   override val endpoint: String = "teamgamelog"
 
-  override val  params: Seq[ParameterValue] = Seq(teamId, seasonTypeParameter, season, leagueID, dateFrom, dateTo)
+  override val params: Seq[ParameterValue] = Seq(teamId, seasonTypeParameter, season, leagueID, dateFrom, dateTo)
 }
-
-/*
-GET /data/10s/v2015/json/mobile_teams/nba/2016/scores/gamedetail/0041600223_gamedetail.json HTTP/1.1
-Host: data.nba.com
-Connection: keep-alive
-Accept: application/json, text/plain,
-Origin: http://stats.nba.com
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36
-Referer: http://stats.nba.com/game/
-Accept-Encoding: gzip, deflate, sdch
-Accept-Language: en-US,en;q=0.8
-If-Modified-Since: Sun, 07 May 2017 03:16:16 GMT
-*/
-
-/*
-GET /data/10s/v2015/json/mobile_teams/nba/2016/scores/pbp/0041600223_full_pbp.json HTTP/1.1
-Host: data.nba.com
-Connection: keep-alive
-Accept: application/json, text/plain,
-Origin: http://stats.nba.com
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36
-Referer: http://stats.nba.com/game/
-Accept-Encoding: gzip, deflate, sdch
-Accept-Language: en-US,en;q=0.8
-If-Modified-Since: Sun, 07 May 2017 03:16:16 GMT
-*/
 
 /*
 GET /stats/commonplayerinfo?LeagueID=00&PlayerID=201566&SeasonType=Regular+Season HTTP/1.1
