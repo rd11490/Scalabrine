@@ -9,7 +9,6 @@ final case class CommonPlayerInfo(playerInfo: Option[PlayerInfo],
 }
 
 final case class CommonPlayerInfoResponse(resource: String,
-                                          parameters: Seq[ParameterValue],
                                           commonPlayerInfo: CommonPlayerInfo)
 
 final case class PlayerInfo(playerId: Option[Int],
@@ -24,6 +23,7 @@ final case class PlayerInfo(playerId: Option[Int],
                             lastAffiliation: Option[String],
                             height: Option[String],
                             weight: Option[String],
+                            yearsExerience: Option[Int],
                             jerseyNumber: Option[String],
                             position: Option[String],
                             rosterStatus: Option[String],
@@ -58,25 +58,26 @@ private[rrdinsights] case object PlayerInfoConverter extends ResultSetRawRespons
       transformToString(row(9)),
       transformToString(row(10)),
       transformToString(row(11)),
-      transformToString(row(12)),
+      transformToInt(row(12)),
       transformToString(row(13)),
       transformToString(row(14)),
+      transformToString(row(15)),
 
-      transformToInt(row(15)),
+      transformToInt(row(16)),
 
-      transformToString(row(18)),
       transformToString(row(17)),
       transformToString(row(18)),
       transformToString(row(19)),
       transformToString(row(20)),
+      transformToString(row(21)),
 
-      transformToInt(row(21)),
       transformToInt(row(22)),
+      transformToInt(row(23)),
 
-      transformToString(row(23)),
       transformToString(row(24)),
       transformToString(row(25)),
       transformToString(row(26)),
+      transformToString(row(27)),
       transformToString(row(27))))
 }
 
@@ -102,21 +103,12 @@ private[rrdinsights] case object PlayerHeadlineStatsConverter extends ResultSetR
       transformToDouble(row(6))))
 }
 
-final case class CommonPlayerInfoParameterRawResponse(PlayerID: Int,
-                                                      LeagueID: String) extends ParameterResponse {
-  val toParameterValues: Seq[ParameterValue] = Seq(
-    PlayerIdParameter.newParameterValue(PlayerID.toString),
-    LeagueIdParameter.newParameterValue(LeagueID))
-
-}
-
 final case class CommonPlayerInfoRawResponse(override val resource: String,
-                                             override val parameters: CommonPlayerInfoParameterRawResponse,
                                              override val resultSets: Array[ResultSetResponse])
-  extends Response[CommonPlayerInfoParameterRawResponse] {
+  extends Response {
 
   def toCommonPlayerInfoResponse: CommonPlayerInfoResponse =
-    CommonPlayerInfoResponse(resource, parameters.toParameterValues, toCommonPlayerInfo)
+    CommonPlayerInfoResponse(resource, toCommonPlayerInfo)
 
   def toCommonPlayerInfo: CommonPlayerInfo = CommonPlayerInfoRawResponse.toCommonPlayerInfo(resultSets)
 }

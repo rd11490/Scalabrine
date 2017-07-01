@@ -20,17 +20,13 @@ final class EndPointTest extends TestSpec {
   private val AwayTeamName: String = "Bucks"
 
 
-  ignore("boxscore endpoint") {
+  test("boxscore endpoint") {
     val param = GameIdParameter.newParameterValue(GameID)
     val boxScore = BoxScoreEndpoint(param)
     val parsedResponse = ScalabrineClient.getBoxScoreSummary(boxScore)
 
     // resource
     assert(parsedResponse.resource === "boxscoresummary")
-
-    // parameters
-    assert(parsedResponse.parameters.size === 1)
-    assert(parsedResponse.parameters.head === GameIdParameter.newParameterValue("0021601219"))
 
     // results
     assert(parsedResponse.boxScoreSummary.gameSummary.isDefined)
@@ -202,17 +198,13 @@ final class EndPointTest extends TestSpec {
     })
   }
 
-  ignore("boxscore advanced endpoint") {
+  test("boxscore advanced endpoint") {
     val param = GameIdParameter.newParameterValue(GameID)
     val boxScore = AdvancedBoxScoreEndpoint(param)
     val parsedResponse = ScalabrineClient.getAdvancedBoxScore(boxScore)
 
     // resource
     assert(parsedResponse.resource === "boxscore")
-
-    // parameters
-    assert(parsedResponse.parameters.size === 6)
-    assert(parsedResponse.parameters.head === GameIdParameter.newParameterValue("0021601219"))
 
     // results
 
@@ -276,7 +268,7 @@ final class EndPointTest extends TestSpec {
     })
   }
 
-  ignore("play by play endpoint") {
+  test("play by play endpoint") {
     val param = GameIdParameter.newParameterValue(GameID)
     val playByPlay = PlayByPlayEndpoint(param)
     val parsedResponse = ScalabrineClient.getPlayByPlay(playByPlay)
@@ -284,25 +276,17 @@ final class EndPointTest extends TestSpec {
     // resource
     assert(parsedResponse.resource === "playbyplay")
 
-    // parameters
-    assert(parsedResponse.parameters.size === 3)
-    assert(parsedResponse.parameters.head === GameIdParameter.newParameterValue("0021601219"))
-
     // results
     assert(parsedResponse.playByPlay.events.size === 448)
   }
 
-  ignore("team game log endpoint") {
+  test("team game log endpoint") {
     val teamId = TeamIdParameter.BostonCeltics
     val teamGameLog = TeamGameLogEndpoint(teamId)
     val parsedResponse = ScalabrineClient.getTeamGameLog(teamGameLog)
 
     // resource
     assert(parsedResponse.resource === "teamgamelog")
-
-    // parameters
-    assert(parsedResponse.parameters.size === 5)
-    assert(parsedResponse.parameters.head === TeamIdParameter.BostonCeltics)
 
     // results
     assert(parsedResponse.teamGameLog.games.size === 82)
@@ -315,10 +299,6 @@ final class EndPointTest extends TestSpec {
 
     // resource
     assert(parsedResponse.resource === "commonplayerinfo")
-
-    // parameters
-    assert(parsedResponse.parameters.head === playerId)
-    assert(parsedResponse.parameters.size === 2)
 
     // results
     assert(parsedResponse.commonPlayerInfo.playerInfo.flatMap(_.playerId).get === 201566)

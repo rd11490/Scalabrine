@@ -1,14 +1,10 @@
 package com.rrdinsights.models
 
-private[rrdinsights] trait Response[P <: ParameterResponse] {
+private[rrdinsights] trait Response {
   def resource: String
-
-  def parameters: P
 
   def resultSets: Array[ResultSetResponse]
 }
-
-private[rrdinsights] trait ParameterResponse
 
 private[rrdinsights] case class ResultSetResponse(name: String,
                                              headers: Array[String],

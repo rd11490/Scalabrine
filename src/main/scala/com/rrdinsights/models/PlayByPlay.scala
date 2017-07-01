@@ -8,7 +8,6 @@ final case class PlayByPlay(events: Seq[PlayByPlayEvent]) {
 }
 
 final case class PlayByPlayResponse(resource: String,
-                                    parameters: Seq[ParameterValue],
                                     playByPlay: PlayByPlay)
 
 final case class PlayByPlayEvent(gameId: Option[String],
@@ -106,22 +105,12 @@ private[rrdinsights] case object PlayByPlayEventConverter extends ResultSetRawRe
 private case class Score(homeScore: Option[Int], awayScore: Option[Int])
 
 
-final case class PlayByPlayParameterRawResponse(GameID: String,
-                                                StartPeriod: Long,
-                                                EndPeriod: Long) extends ParameterResponse {
-  val toParameterValues: Seq[ParameterValue] = Seq(
-    GameIdParameter.newParameterValue(GameID),
-    StartPeriodParameter.newParameterValue(StartPeriod.toString),
-    EndPeriodParameter.newParameterValue(EndPeriod.toString))
-}
-
 final case class PlayByPlayRawResponse(override val resource: String,
-                                             override val parameters: PlayByPlayParameterRawResponse,
                                              override val resultSets: Array[ResultSetResponse])
-  extends Response[PlayByPlayParameterRawResponse] {
+  extends Response {
 
   def toPlayByPlayResponse: PlayByPlayResponse =
-    PlayByPlayResponse(resource, parameters.toParameterValues, toPlayByPlay)
+    PlayByPlayResponse(resource, toPlayByPlay)
 
   def toPlayByPlay: PlayByPlay = PlayByPlayRawResponse.toPlayByPlay(resultSets)
 }

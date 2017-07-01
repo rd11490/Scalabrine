@@ -8,7 +8,6 @@ final case class TeamGameLog(games: Seq[GameLog]) {
 }
 
 final case class TeamGameLogResponse(resource: String,
-                                     parameters: Seq[ParameterValue],
                                      teamGameLog: TeamGameLog)
 
 final case class GameLog(teamId: Option[Int],
@@ -86,28 +85,13 @@ private[rrdinsights] case object GameConverter extends ResultSetRawResponseConve
   private def minutesToDouble(minutes: Option[Int]): Option[Double] = minutes.map(_.toDouble)
 }
 
-final case class TeamGameLogParameterRawResponse(TeamID: Int,
-                                                 LeagueID: String,
-                                                 Season: String,
-                                                 SeasonType: String,
-                                                 DateFrom: String,
-                                                 DateTo: String) extends ParameterResponse {
-  val toParameterValues: Seq[ParameterValue] = Seq(
-    TeamIdParameter.newParameterValue(TeamID.toString),
-    SeasonParameter.newParameterValue(Season),
-    SeasonTypeParameter.newParameterValue(SeasonType),
-    DateFromParameter.newParameterValue(DateFrom),
-    DateToParameter.newParameterValue(DateTo))
-
-}
 
 final case class TeamGameLogRawResponse(override val resource: String,
-                                       override val parameters: TeamGameLogParameterRawResponse,
                                        override val resultSets: Array[ResultSetResponse])
-  extends Response[TeamGameLogParameterRawResponse] {
+  extends Response {
 
   def toTeamGameLogResponse: TeamGameLogResponse =
-    TeamGameLogResponse(resource, parameters.toParameterValues, toTeamGameLog)
+    TeamGameLogResponse(resource, toTeamGameLog)
 
   def toTeamGameLog: TeamGameLog = TeamGameLogRawResponse.toTeamGameLog(resultSets)
 }
