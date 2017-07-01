@@ -96,6 +96,15 @@ final case class TeamGameLogEndpoint(teamId: ParameterValue,
   override val params: Seq[ParameterValue] = Seq(teamId, seasonTypeParameter, season, leagueID, dateFrom, dateTo)
 }
 
+final case class CommonPlayerInfoEndpoint(playerId: ParameterValue,
+                                  leagueId: ParameterValue = LeagueIdParameter.defaultParameterValue,
+                                  seasonType: ParameterValue = SeasonTypeParameter.defaultParameterValue) extends Endpoint {
+
+  override val endpoint: String = "commonplayerinfo"
+
+  override val params: Seq[ParameterValue] = Seq(playerId, leagueId, seasonType)
+}
+
 /*
 GET /stats/commonplayerinfo?LeagueID=00&PlayerID=201566&SeasonType=Regular+Season HTTP/1.1
 Host: stats.nba.com

@@ -48,6 +48,11 @@ object ScalabrineClient {
     .extract[TeamGameLogRawResponse]
     .toTeamGameLogResponse
 
+  def getCommonPlayerInfo(commonPlayerInfo: CommonPlayerInfoEndpoint): CommonPlayerInfoResponse =
+    get[CommonPlayerInfoEndpoint](commonPlayerInfo)
+    .extract[CommonPlayerInfoRawResponse]
+    .toCommonPlayerInfoResponse
+
   private def parseResponse(response: CloseableHttpResponse): String = {
     val is = response.getEntity.getContent
     Source.fromInputStream(is).getLines().mkString(" ")

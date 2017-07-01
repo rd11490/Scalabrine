@@ -307,4 +307,20 @@ final class EndPointTest extends TestSpec {
     // results
     assert(parsedResponse.teamGameLog.games.size === 82)
   }
+
+  test("common player info endpoint") {
+    val playerId = PlayerIdParameter.newParameterValue("201566")
+    val playerCommonInfo = CommonPlayerInfoEndpoint(playerId)
+    val parsedResponse = ScalabrineClient.getCommonPlayerInfo(playerCommonInfo)
+
+    // resource
+    assert(parsedResponse.resource === "commonplayerinfo")
+
+    // parameters
+    assert(parsedResponse.parameters.head === playerId)
+    assert(parsedResponse.parameters.size === 2)
+
+    // results
+    assert(parsedResponse.commonPlayerInfo.playerInfo.flatMap(_.playerId).get === 201566)
+  }
 }
