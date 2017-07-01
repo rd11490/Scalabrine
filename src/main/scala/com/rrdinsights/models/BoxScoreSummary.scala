@@ -14,7 +14,6 @@ final case class BoxScoreSummary(gameSummary: Option[GameSummary],
                            availableVideo: Option[AvailableVideo])
 
 final case class BoxScoreSummaryResponse(resource: String,
-                                   parameters: Seq[ParameterValue],
                                    boxScoreSummary: BoxScoreSummary)
 
 
@@ -288,18 +287,13 @@ private[rrdinsights] case object AvailableVideoConverter extends ResultSetRawRes
 }
 
 final case class BoxScoreSummaryRawResponse(override val resource: String,
-                                            override val parameters: BoxScoreSummaryParameterRawResponse,
                                             override val resultSets: Array[ResultSetResponse])
-  extends Response[BoxScoreSummaryParameterRawResponse] {
+  extends Response {
 
   def toBoxScoreSummaryResponse: BoxScoreSummaryResponse =
-    BoxScoreSummaryResponse(resource, parameters.toParameterValues, toBoxScoreSummary)
+    BoxScoreSummaryResponse(resource, toBoxScoreSummary)
 
   def toBoxScoreSummary: BoxScoreSummary = BoxScoreSummaryRawResponse.toBoxScoreSummary(resultSets)
-}
-
-final case class BoxScoreSummaryParameterRawResponse(GameID: String) extends ParameterResponse {
-  val toParameterValues: Seq[ParameterValue] = Seq(GameIdParameter.newParameterValue(GameID))
 }
 
 private[rrdinsights] object BoxScoreSummaryRawResponse extends ResultSetRawResponseConverters {

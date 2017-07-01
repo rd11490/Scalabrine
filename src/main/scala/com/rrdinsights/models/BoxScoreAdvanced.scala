@@ -9,7 +9,6 @@ final case class BoxScoreAdvanced(teamStats: Seq[TeamStats],
 }
 
 final case class BoxScoreAdvancedResponse(resource: String,
-                                          parameters: Seq[ParameterValue],
                                           boxScoreAdvanced: BoxScoreAdvanced)
 
 final case class TeamStats(gameId: Option[String],
@@ -122,29 +121,13 @@ private[rrdinsights] case object PlayerStatsConverter extends ResultSetRawRespon
 }
 
 final case class BoxScoreAdvancedRawResponse(override val resource: String,
-                                            override val parameters: BoxScoreAdvancedParameterRawResponse,
                                             override val resultSets: Array[ResultSetResponse])
-  extends Response[BoxScoreAdvancedParameterRawResponse] {
+  extends Response {
 
   def toBoxScoreAdvancedResponse: BoxScoreAdvancedResponse =
-    BoxScoreAdvancedResponse(resource, parameters.toParameterValues, toBoxScoreAdvanced)
+    BoxScoreAdvancedResponse(resource, toBoxScoreAdvanced)
 
   def toBoxScoreAdvanced: BoxScoreAdvanced = BoxScoreAdvancedRawResponse.toBoxScoreAdvanced(resultSets)
-}
-
-final case class BoxScoreAdvancedParameterRawResponse(GameID: String,
-                                                     StartPeriod: Long,
-                                                     EndPeriod: Long,
-                                                     StartRange: Long,
-                                                     EndRange: Long,
-                                                     RangeType: Long) extends ParameterResponse {
-  val toParameterValues: Seq[ParameterValue] = Seq(
-    GameIdParameter.newParameterValue(GameID),
-    StartPeriodParameter.newParameterValue(StartPeriod.toString),
-    EndPeriodParameter.newParameterValue(EndPeriod.toString),
-    StartRangeParameter.newParameterValue(StartRange.toString),
-    EndRangeParameter.newParameterValue(EndRange.toString),
-    EndRangeParameter.newParameterValue(RangeType.toString))
 }
 
 private[rrdinsights] object BoxScoreAdvancedRawResponse extends ResultSetRawResponseConverters {
