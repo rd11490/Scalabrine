@@ -4,33 +4,33 @@ import com.rrdinsights.parameters.{GameIdParameter, ParameterValue}
 import com.rrdinsights.models.Utils._
 
 final case class BoxScoreSummary(gameSummary: Option[GameSummary],
-                           gameInfo: Option[GameInfo],
-                           homeStats: TeamSummaryStats,
-                           awayStats: TeamSummaryStats,
-                           officials: Seq[Officials],
-                           inactivePlayers: Seq[InactivePlayers],
-                           lastMeeting: Option[LastMeeting],
-                           seasonSeries: Option[SeasonSeries],
-                           availableVideo: Option[AvailableVideo])
+                                 gameInfo: Option[GameInfo],
+                                 homeStats: TeamSummaryStats,
+                                 awayStats: TeamSummaryStats,
+                                 officials: Seq[Officials],
+                                 inactivePlayers: Seq[InactivePlayers],
+                                 lastMeeting: Option[LastMeeting],
+                                 seasonSeries: Option[SeasonSeries],
+                                 availableVideo: Option[AvailableVideo])
 
 final case class BoxScoreSummaryResponse(resource: String,
-                                   boxScoreSummary: BoxScoreSummary)
+                                         boxScoreSummary: BoxScoreSummary)
 
 
 final case class GameSummary(gameDate: Option[String] = None,
-                       gameSequence: Option[Int] = None,
-                       gameId: Option[String] = None,
-                       gameStatusId: Option[Int] = None,
-                       gameStatusText: Option[String] = None,
-                       gameCode: Option[String] = None,
-                       homeTeamId: Option[Int] = None,
-                       awayTeamId: Option[Int] = None,
-                       season: Option[String] = None,
-                       livePeriod: Option[Int] = None,
-                       livePCTime: Option[String] = None,
-                       broadcaster: Option[String] = None,
-                       livePeriodTimeBroadcast: Option[String] = None,
-                       whStatus: Option[Int] = None) extends ConvertedResultSetResponse
+                             gameSequence: Option[Int] = None,
+                             gameId: Option[String] = None,
+                             gameStatusId: Option[Int] = None,
+                             gameStatusText: Option[String] = None,
+                             gameCode: Option[String] = None,
+                             homeTeamId: Option[Int] = None,
+                             awayTeamId: Option[Int] = None,
+                             season: Option[String] = None,
+                             livePeriod: Option[Int] = None,
+                             livePCTime: Option[String] = None,
+                             broadcaster: Option[String] = None,
+                             livePeriodTimeBroadcast: Option[String] = None,
+                             whStatus: Option[Int] = None) extends ConvertedResultSetResponse
 
 private[rrdinsights] case object GameSummaryConverter extends ResultSetRawResponseConverter[GameSummary] {
 
@@ -57,19 +57,19 @@ private[rrdinsights] case object GameSummaryConverter extends ResultSetRawRespon
 }
 
 final case class OtherStats(leagueId: Option[String] = None,
-                      teamId: Option[Int] = None,
-                      teamAbbreviation: Option[String] = None,
-                      teamCity: Option[String] = None,
-                      pointsInPaint: Option[Int] = None,
-                      secondChancePoints: Option[Int] = None,
-                      fastBreakPoints: Option[Int] = None,
-                      largestLead: Option[Int] = None,
-                      leadChanges: Option[Int] = None,
-                      timesTied: Option[Int] = None,
-                      teamTurnovers: Option[Int] = None,
-                      totalTurnovers: Option[Int] = None,
-                      teamRebounds: Option[Int] = None,
-                      pointsOffTurnOvers: Option[Int] = None) extends ConvertedResultSetResponse
+                            teamId: Option[Int] = None,
+                            teamAbbreviation: Option[String] = None,
+                            teamCity: Option[String] = None,
+                            pointsInPaint: Option[Int] = None,
+                            secondChancePoints: Option[Int] = None,
+                            fastBreakPoints: Option[Int] = None,
+                            largestLead: Option[Int] = None,
+                            leadChanges: Option[Int] = None,
+                            timesTied: Option[Int] = None,
+                            teamTurnovers: Option[Int] = None,
+                            totalTurnovers: Option[Int] = None,
+                            teamRebounds: Option[Int] = None,
+                            pointsOffTurnOvers: Option[Int] = None) extends ConvertedResultSetResponse
 
 private[rrdinsights] object OtherStatsConverter extends ResultSetRawResponseConverter[OtherStats] {
   override val name: String = "OtherStats"
@@ -94,9 +94,9 @@ private[rrdinsights] object OtherStatsConverter extends ResultSetRawResponseConv
 }
 
 final case class Officials(officialId: Option[Int] = None,
-                     firstName: Option[String] = None,
-                     lastName: Option[String] = None,
-                     number: Option[String] = None) extends ConvertedResultSetResponse
+                           firstName: Option[String] = None,
+                           lastName: Option[String] = None,
+                           number: Option[String] = None) extends ConvertedResultSetResponse
 
 private[rrdinsights] case object OfficialsConverter extends ResultSetRawResponseConverter[Officials] {
   override val name: String = "Officials"
@@ -111,13 +111,13 @@ private[rrdinsights] case object OfficialsConverter extends ResultSetRawResponse
 }
 
 final case class InactivePlayers(playerId: Option[Int] = None,
-                           firstName: Option[String] = None,
-                           lastName: Option[String] = None,
-                           number: Option[String] = None,
-                           teamId: Option[Int] = None,
-                           teamCity: Option[String] = None,
-                           teamName: Option[String] = None,
-                           teamAbbreviation: Option[String] = None) extends ConvertedResultSetResponse
+                                 firstName: Option[String] = None,
+                                 lastName: Option[String] = None,
+                                 number: Option[String] = None,
+                                 teamId: Option[Int] = None,
+                                 teamCity: Option[String] = None,
+                                 teamName: Option[String] = None,
+                                 teamAbbreviation: Option[String] = None) extends ConvertedResultSetResponse
 
 private[rrdinsights] case object InactivePlayersConverter extends ResultSetRawResponseConverter[InactivePlayers] {
   override val name: String = "InactivePlayers"
@@ -136,8 +136,8 @@ private[rrdinsights] case object InactivePlayersConverter extends ResultSetRawRe
 }
 
 final case class GameInfo(gameDate: Option[String] = None,
-                    attendance: Option[Int] = None,
-                    gameTime: Option[String] = None) extends ConvertedResultSetResponse
+                          attendance: Option[Int] = None,
+                          gameTime: Option[String] = None) extends ConvertedResultSetResponse
 
 private[rrdinsights] case object GameInfoConverter extends ResultSetRawResponseConverter[GameInfo] {
 
@@ -152,28 +152,28 @@ private[rrdinsights] case object GameInfoConverter extends ResultSetRawResponseC
 }
 
 final case class ScoreLine(gameDateTimeEST: Option[String] = None,
-                     gameSequence: Option[Int] = None,
-                     gameId: Option[String] = None,
-                     teamId: Option[Int] = None,
-                     teamAbbreviation: Option[String] = None,
-                     teamCityName: Option[String] = None,
-                     teamNickName: Option[String] = None,
-                     teamWinsLosses: Option[String] = None,
-                     quarter1Points: Option[Int] = None,
-                     quarter2Points: Option[Int] = None,
-                     quarter3Points: Option[Int] = None,
-                     quarter4Points: Option[Int] = None,
-                     ot1Points: Option[Int] = None,
-                     ot2Points: Option[Int] = None,
-                     ot3Points: Option[Int] = None,
-                     ot4Points: Option[Int] = None,
-                     ot5Points: Option[Int] = None,
-                     ot6Points: Option[Int] = None,
-                     ot7Points: Option[Int] = None,
-                     ot8Points: Option[Int] = None,
-                     ot9Points: Option[Int] = None,
-                     ot10Points: Option[Int] = None,
-                     points: Option[Int] = None) extends ConvertedResultSetResponse
+                           gameSequence: Option[Int] = None,
+                           gameId: Option[String] = None,
+                           teamId: Option[Int] = None,
+                           teamAbbreviation: Option[String] = None,
+                           teamCityName: Option[String] = None,
+                           teamNickName: Option[String] = None,
+                           teamWinsLosses: Option[String] = None,
+                           quarter1Points: Option[Int] = None,
+                           quarter2Points: Option[Int] = None,
+                           quarter3Points: Option[Int] = None,
+                           quarter4Points: Option[Int] = None,
+                           ot1Points: Option[Int] = None,
+                           ot2Points: Option[Int] = None,
+                           ot3Points: Option[Int] = None,
+                           ot4Points: Option[Int] = None,
+                           ot5Points: Option[Int] = None,
+                           ot6Points: Option[Int] = None,
+                           ot7Points: Option[Int] = None,
+                           ot8Points: Option[Int] = None,
+                           ot9Points: Option[Int] = None,
+                           ot10Points: Option[Int] = None,
+                           points: Option[Int] = None) extends ConvertedResultSetResponse
 
 private[rrdinsights] case object ScoreLineConverter extends ResultSetRawResponseConverter[ScoreLine] {
   override val name: String = "LineScore"
@@ -207,18 +207,18 @@ private[rrdinsights] case object ScoreLineConverter extends ResultSetRawResponse
 }
 
 final case class LastMeeting(currentGameId: Option[String] = None,
-                       gameId: Option[String] = None,
-                       gameDateTimeEST: Option[String] = None,
-                       homeTeamId: Option[Int] = None,
-                       homeTeamCity: Option[String] = None,
-                       homeTeamName: Option[String] = None,
-                       homeTeamAbbreviation: Option[String] = None,
-                       homeTeamPoints: Option[Int] = None,
-                       awayTeamId: Option[Int] = None,
-                       awayTeamCity: Option[String] = None,
-                       awayTeamName: Option[String] = None,
-                       awayTeamCity1: Option[String] = None,
-                       awayTeamPoints: Option[Int] = None) extends ConvertedResultSetResponse
+                             gameId: Option[String] = None,
+                             gameDateTimeEST: Option[String] = None,
+                             homeTeamId: Option[Int] = None,
+                             homeTeamCity: Option[String] = None,
+                             homeTeamName: Option[String] = None,
+                             homeTeamAbbreviation: Option[String] = None,
+                             homeTeamPoints: Option[Int] = None,
+                             awayTeamId: Option[Int] = None,
+                             awayTeamCity: Option[String] = None,
+                             awayTeamName: Option[String] = None,
+                             awayTeamCity1: Option[String] = None,
+                             awayTeamPoints: Option[Int] = None) extends ConvertedResultSetResponse
 
 private[rrdinsights] case object LastMeetingConverter extends ResultSetRawResponseConverter[LastMeeting] {
   override val name: String = "LastMeeting"
@@ -242,12 +242,12 @@ private[rrdinsights] case object LastMeetingConverter extends ResultSetRawRespon
 }
 
 final case class SeasonSeries(gameId: Option[String] = None,
-                        homeTeamId: Option[Int] = None,
-                        awayTeamId: Option[Int] = None,
-                        gameDateTimeEST: Option[String] = None,
-                        homeTeamWins: Option[Int] = None,
-                        homeTeamLosses: Option[Int] = None,
-                        seriesLeader: Option[String] = None) extends ConvertedResultSetResponse
+                              homeTeamId: Option[Int] = None,
+                              awayTeamId: Option[Int] = None,
+                              gameDateTimeEST: Option[String] = None,
+                              homeTeamWins: Option[Int] = None,
+                              homeTeamLosses: Option[Int] = None,
+                              seriesLeader: Option[String] = None) extends ConvertedResultSetResponse
 
 private[rrdinsights] case object SeasonSeriesConverter extends ResultSetRawResponseConverter[SeasonSeries] {
   override val name: String = "SeasonSeries"
@@ -264,12 +264,12 @@ private[rrdinsights] case object SeasonSeriesConverter extends ResultSetRawRespo
 }
 
 final case class AvailableVideo(gameId: Option[String] = None,
-                          VIDEO_AVAILABLE_FLAG: Boolean,
-                          PT_AVAILABLE: Boolean,
-                          PT_XYZ_AVAILABLE: Boolean,
-                          WH_STATUS: Boolean,
-                          HUSTLE_STATUS: Boolean,
-                          HISTORICAL_STATUS: Boolean) extends ConvertedResultSetResponse
+                                VIDEO_AVAILABLE_FLAG: Boolean,
+                                PT_AVAILABLE: Boolean,
+                                PT_XYZ_AVAILABLE: Boolean,
+                                WH_STATUS: Boolean,
+                                HUSTLE_STATUS: Boolean,
+                                HISTORICAL_STATUS: Boolean) extends ConvertedResultSetResponse
 
 private[rrdinsights] case object AvailableVideoConverter extends ResultSetRawResponseConverter[AvailableVideo] {
   override val name: String = "AvailableVideo"
@@ -287,8 +287,7 @@ private[rrdinsights] case object AvailableVideoConverter extends ResultSetRawRes
 }
 
 final case class BoxScoreSummaryRawResponse(override val resource: String,
-                                            override val resultSets: Array[ResultSetResponse])
-  extends Response {
+                                            override val resultSets: Array[ResultSetResponse]) extends RawResponse {
 
   def toBoxScoreSummaryResponse: BoxScoreSummaryResponse =
     BoxScoreSummaryResponse(resource, toBoxScoreSummary)
@@ -310,7 +309,7 @@ private[rrdinsights] object BoxScoreSummaryRawResponse extends ResultSetRawRespo
 
 
   def toBoxScoreSummary(rawSummary: Array[ResultSetResponse]): BoxScoreSummary = {
-    val gameSummary =  convert[GameSummary](rawSummary, GameSummaryConverter).headOption
+    val gameSummary = convert[GameSummary](rawSummary, GameSummaryConverter).headOption
 
     val scoreLines = convert[ScoreLine](rawSummary, ScoreLineConverter)
     val otherStats = convert[OtherStats](rawSummary, OtherStatsConverter)

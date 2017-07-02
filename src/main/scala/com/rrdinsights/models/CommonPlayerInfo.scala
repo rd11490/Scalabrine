@@ -4,9 +4,7 @@ import com.rrdinsights.parameters._
 import com.rrdinsights.models.Utils._
 
 final case class CommonPlayerInfo(playerInfo: Option[PlayerInfo],
-                                  playerHeadlineStats: Option[PlayerHeadlineStats]) {
-
-}
+                                  playerHeadlineStats: Option[PlayerHeadlineStats])
 
 final case class CommonPlayerInfoResponse(resource: String,
                                           commonPlayerInfo: CommonPlayerInfo)
@@ -105,7 +103,7 @@ private[rrdinsights] case object PlayerHeadlineStatsConverter extends ResultSetR
 
 final case class CommonPlayerInfoRawResponse(override val resource: String,
                                              override val resultSets: Array[ResultSetResponse])
-  extends Response {
+  extends RawResponse {
 
   def toCommonPlayerInfoResponse: CommonPlayerInfoResponse =
     CommonPlayerInfoResponse(resource, toCommonPlayerInfo)

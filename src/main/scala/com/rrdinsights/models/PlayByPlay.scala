@@ -1,11 +1,8 @@
 package com.rrdinsights.models
 
-import com.rrdinsights.parameters._
 import com.rrdinsights.models.Utils._
 
-final case class PlayByPlay(events: Seq[PlayByPlayEvent]) {
-
-}
+final case class PlayByPlay(events: Seq[PlayByPlayEvent])
 
 final case class PlayByPlayResponse(resource: String,
                                     playByPlay: PlayByPlay)
@@ -106,8 +103,7 @@ private case class Score(homeScore: Option[Int], awayScore: Option[Int])
 
 
 final case class PlayByPlayRawResponse(override val resource: String,
-                                             override val resultSets: Array[ResultSetResponse])
-  extends Response {
+                                             override val resultSets: Array[ResultSetResponse]) extends RawResponse {
 
   def toPlayByPlayResponse: PlayByPlayResponse =
     PlayByPlayResponse(resource, toPlayByPlay)

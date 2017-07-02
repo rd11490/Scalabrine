@@ -85,8 +85,8 @@ final case class PlayByPlayEndpoint(gameId: ParameterValue,
 }
 
 final case class TeamGameLogEndpoint(teamId: ParameterValue,
+                                     season: ParameterValue,
                                      seasonTypeParameter: ParameterValue = SeasonTypeParameter.defaultParameterValue,
-                                     season: ParameterValue = SeasonParameter.defaultParameterValue,
                                      leagueID: ParameterValue = LeagueIdParameter.defaultParameterValue,
                                      dateFrom: ParameterValue = DateFromParameter.defaultParameterValue,
                                      dateTo: ParameterValue = DateToParameter.defaultParameterValue) extends Endpoint {
@@ -97,14 +97,58 @@ final case class TeamGameLogEndpoint(teamId: ParameterValue,
 }
 
 final case class CommonPlayerInfoEndpoint(playerId: ParameterValue,
-                                  leagueId: ParameterValue = LeagueIdParameter.defaultParameterValue,
-                                  seasonType: ParameterValue = SeasonTypeParameter.defaultParameterValue) extends Endpoint {
+                                          leagueId: ParameterValue = LeagueIdParameter.defaultParameterValue,
+                                          seasonType: ParameterValue = SeasonTypeParameter.defaultParameterValue) extends Endpoint {
 
   override val endpoint: String = "commonplayerinfo"
 
   override val params: Seq[ParameterValue] = Seq(playerId, leagueId, seasonType)
 }
 
+final case class ShotChartDetailEndpoint(playerId: ParameterValue,
+                                         leagueId: ParameterValue = LeagueIdParameter.defaultParameterValue,
+                                         teamId: ParameterValue = TeamIdParameter.defaultParameterValue,
+                                         gameId: ParameterValue = GameIdParameter.defaultParameterValue,
+                                         season: ParameterValue = SeasonParameter.defaultParameterValue,
+                                         seasonType: ParameterValue = SeasonTypeParameter.defaultParameterValue,
+                                         seasonSegment: ParameterValue = SeasonSegmentParameter.defaultParameterValue,
+                                         contextMeasure: ParameterValue = ContextMeasureParameter.defaultParameterValue,
+                                         contextFilter: ParameterValue = ContextFilterParameter.defaultParameterValue,
+                                         position: ParameterValue = PositionParameter.defaultParameterValue,
+                                         playerPosition: ParameterValue = PlayerPositionParameter.defaultParameterValue,
+                                         location: ParameterValue = LocationParameter.defaultParameterValue,
+                                         period: ParameterValue = PeriodParameter.defaultParameterValue,
+                                         vsConference: ParameterValue = VsConferenceParameter.defaultParameterValue,
+                                         vsDivision: ParameterValue = VsDivisionParameter.defaultParameterValue,
+                                         lastNGames: ParameterValue = LastNGamesParameter.defaultParameterValue,
+                                         outcome: ParameterValue = OutcomeParameter.defaultParameterValue,
+                                         dateFrom: ParameterValue = DateFromParameter.defaultParameterValue,
+                                         dateTo: ParameterValue = DateToParameter.defaultParameterValue,
+                                         startPeriod: ParameterValue = StartPeriodParameter.defaultParameterValue,
+                                         endPeriod: ParameterValue = EndRangeParameter.defaultParameterValue,
+                                         startRange: ParameterValue = StartRangeParameter.defaultParameterValue,
+                                         endRange: ParameterValue = EndRangeParameter.defaultParameterValue,
+                                         rangeType: ParameterValue = EndRangeParameter.defaultParameterValue,
+                                         opponentTeamId: ParameterValue = OpponentTeamIdParameter.defaultParameterValue,
+                                         aheadBehind: ParameterValue = AheadBehindParameter.defaultParameterValue,
+                                         pointDiff: ParameterValue = PointDiffParameter.defaultParameterValue,
+                                         rookieYear: ParameterValue = RookieYearParameter.defaultParameterValue,
+                                         gameSegment: ParameterValue = GameSegmentParameter.defaultParameterValue,
+                                         month: ParameterValue = MonthParameter.defaultParameterValue,
+                                         clutchTime: ParameterValue = ClutchTimeParameter.defaultParameterValue) extends Endpoint {
+
+  override val endpoint: String = "shotchartdetail"
+
+  override val params: Seq[ParameterValue] =
+    Seq(playerId, teamId, leagueId, gameId, season, seasonSegment, seasonType,
+      contextFilter, contextMeasure, position, playerPosition, location, period, endPeriod, startPeriod, startRange,
+      endRange, dateFrom, dateTo, vsConference, vsDivision, lastNGames, outcome, rangeType, opponentTeamId, aheadBehind,
+      pointDiff, rookieYear, gameSegment, month, clutchTime)
+}
+
+/*
+http://stats.nba.com/stats/shotchartdetail?Period=0&VsConference=&LeagueID=00&LastNGames=0&TeamID=0&Position=&Location=&Outcome=&ContextMeasure=FGA&DateFrom=&StartPeriod=&DateTo=&OpponentTeamID=0&ContextFilter=&RangeType=&Season=&AheadBehind=&PlayerID=201935&EndRange=&VsDivision=&PointDiff=&RookieYear=&GameSegment=&Month=0&ClutchTime=&StartRange=&EndPeriod=&SeasonType=Regular+Season&SeasonSegment=&GameID=&PlayerPosition=
+ */
 /*
 GET /stats/commonplayerinfo?LeagueID=00&PlayerID=201566&SeasonType=Regular+Season HTTP/1.1
 Host: stats.nba.com

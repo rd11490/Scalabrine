@@ -1,11 +1,8 @@
 package com.rrdinsights.models
 
-import com.rrdinsights.parameters._
 import com.rrdinsights.models.Utils._
 
-final case class TeamGameLog(games: Seq[GameLog]) {
-
-}
+final case class TeamGameLog(games: Seq[GameLog])
 
 final case class TeamGameLogResponse(resource: String,
                                      teamGameLog: TeamGameLog)
@@ -33,7 +30,7 @@ final case class GameLog(teamId: Option[Int],
                          freeThrowPercentage: Option[Double],
 
                          offensiveRebounds: Option[Int],
-                         deffensiveRebounds: Option[Int],
+                         defensiveRebounds: Option[Int],
                          totalRebounds: Option[Int],
 
                          assists: Option[Int],
@@ -87,13 +84,13 @@ private[rrdinsights] case object GameConverter extends ResultSetRawResponseConve
 
 
 final case class TeamGameLogRawResponse(override val resource: String,
-                                       override val resultSets: Array[ResultSetResponse])
-  extends Response {
+                                        override val resultSets: Array[ResultSetResponse]) extends RawResponse {
 
   def toTeamGameLogResponse: TeamGameLogResponse =
     TeamGameLogResponse(resource, toTeamGameLog)
 
   def toTeamGameLog: TeamGameLog = TeamGameLogRawResponse.toTeamGameLog(resultSets)
+
 }
 
 private[rrdinsights] object TeamGameLogRawResponse extends ResultSetRawResponseConverters {

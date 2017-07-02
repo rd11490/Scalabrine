@@ -1,12 +1,9 @@
 package com.rrdinsights.models
 
-import com.rrdinsights.parameters._
 import com.rrdinsights.models.Utils._
 
 final case class BoxScoreAdvanced(teamStats: Seq[TeamStats],
-                                  playerStats: Seq[PlayerStats]) {
-
-}
+                                  playerStats: Seq[PlayerStats])
 
 final case class BoxScoreAdvancedResponse(resource: String,
                                           boxScoreAdvanced: BoxScoreAdvanced)
@@ -122,7 +119,7 @@ private[rrdinsights] case object PlayerStatsConverter extends ResultSetRawRespon
 
 final case class BoxScoreAdvancedRawResponse(override val resource: String,
                                             override val resultSets: Array[ResultSetResponse])
-  extends Response {
+  extends RawResponse {
 
   def toBoxScoreAdvancedResponse: BoxScoreAdvancedResponse =
     BoxScoreAdvancedResponse(resource, toBoxScoreAdvanced)

@@ -1,6 +1,6 @@
 package com.rrdinsights.models
 
-private[rrdinsights] trait Response {
+private[rrdinsights] trait RawResponse {
   def resource: String
 
   def resultSets: Array[ResultSetResponse]
@@ -23,6 +23,8 @@ private[models] trait ResultSetRawResponseConverters {
       .find(_.name == converter.name)
       .map(v => converter.convertRaw(v.rowSet))
       .getOrElse(Seq.empty)
+
+
 
 }
 

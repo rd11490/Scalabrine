@@ -53,8 +53,6 @@ object SeasonParameter extends Parameter {
   val Season201314: ParameterValue = newParameterValue("2013-14")
   val Season201213: ParameterValue = newParameterValue("2012-13")
   val Season201112: ParameterValue = newParameterValue("2011-12")
-
-  override val defaultParameterValue: ParameterValue = Season201617
 }
 
 object SeasonTypeParameter extends Parameter {
@@ -109,9 +107,6 @@ object TeamIdParameter extends Parameter {
 
 object GameIdParameter extends Parameter {
   override val parameterName: String = "GameID"
-
-  override def defaultParameterValue: ParameterValue =
-    throw new NotImplementedError("There is no Default Value for GameId")
 }
 
 object StartPeriodParameter extends NumericParameter {
@@ -257,4 +252,52 @@ object VsConferenceParameter extends Parameter {
 
 object VsDivisionParameter extends Parameter {
   override val parameterName: String = "VsDivision"
+}
+
+object ContextMeasureParameter extends Parameter {
+  override val parameterName: String = "ContextMeasure"
+
+  val Points: ParameterValue = newParameterValue("PTS")
+  val FieldGoalsMade: ParameterValue = newParameterValue("FGM")
+  val FieldGoalsAttempted: ParameterValue = newParameterValue("FGA")
+  val FieldGoalPercentage: ParameterValue = newParameterValue("FG_PCT")
+  val ThreePointFieldGoalsMade: ParameterValue = newParameterValue("FG3M")
+  val ThreePointFieldGoalsAttempted: ParameterValue = newParameterValue("FG3A")
+  val ThreePointFieldGoalPercentage: ParameterValue = newParameterValue("FG3_PCT")
+  val PersonalFoul: ParameterValue = newParameterValue("PF")
+  val EffectiveFieldGoalPercentage: ParameterValue = newParameterValue("EFG_PCT")
+  val TrueShootingPercentage: ParameterValue = newParameterValue("TS_PCT")
+  val FastBreakPoints: ParameterValue = newParameterValue("PTS_FB")
+  val PointsOffTurnovers: ParameterValue = newParameterValue("PTS_OFF_TOV")
+  val SecondChancePoints: ParameterValue = newParameterValue("PTS_2ND_CHANCE")
+
+  override val defaultParameterValue: ParameterValue = FieldGoalsAttempted
+}
+
+object ContextFilterParameter extends Parameter {
+  override val parameterName: String = "ContextFilter"
+}
+
+object PositionParameter extends Parameter {
+  override val parameterName: String = "Position"
+}
+
+object AheadBehindParameter extends Parameter {
+  override val parameterName: String = "AheadBehind"
+}
+
+object PointDiffParameter extends Parameter {
+  override val parameterName: String = "PointDiff"
+}
+
+object RookieYearParameter extends Parameter {
+  override val parameterName: String = "RookieYear"
+}
+
+object ClutchTimeParameter extends Parameter {
+  override val parameterName: String = "ClutchTime"
+}
+
+object PlayerPositionParameter extends Parameter {
+  override val parameterName: String = "PlayerPosition"
 }

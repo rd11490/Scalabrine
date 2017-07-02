@@ -282,7 +282,8 @@ final class EndPointTest extends TestSpec {
 
   test("team game log endpoint") {
     val teamId = TeamIdParameter.BostonCeltics
-    val teamGameLog = TeamGameLogEndpoint(teamId)
+    val season = SeasonParameter.Season201617
+    val teamGameLog = TeamGameLogEndpoint(teamId, season)
     val parsedResponse = ScalabrineClient.getTeamGameLog(teamGameLog)
 
     // resource
