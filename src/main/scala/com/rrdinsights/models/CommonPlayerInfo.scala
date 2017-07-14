@@ -1,6 +1,6 @@
 package com.rrdinsights.models
 
-import com.rrdinsights.parameters._
+import java.{lang => jl}
 import com.rrdinsights.models.Utils._
 
 final case class CommonPlayerInfo(playerInfo: Option[PlayerInfo],
@@ -9,35 +9,35 @@ final case class CommonPlayerInfo(playerInfo: Option[PlayerInfo],
 final case class CommonPlayerInfoResponse(resource: String,
                                           commonPlayerInfo: CommonPlayerInfo)
 
-final case class PlayerInfo(playerId: Option[Int],
-                            firstName: Option[String],
-                            lastName: Option[String],
-                            displayFirstLast: Option[String],
-                            displayLastCommaFirst: Option[String],
-                            displayInitialLast: Option[String],
-                            birthday: Option[String], //YYYY-MM-DDTHH:MM:SS
-                            school: Option[String],
-                            country: Option[String],
-                            lastAffiliation: Option[String],
-                            height: Option[String],
-                            weight: Option[String],
-                            yearsExerience: Option[Int],
-                            jerseyNumber: Option[String],
-                            position: Option[String],
-                            rosterStatus: Option[String],
-                            teamId: Option[Int],
-                            teamName: Option[String],
-                            teamAbbreviation: Option[String],
-                            teamCode: Option[String],
-                            teamCity: Option[String],
-                            playerCode: Option[String],
-                            fromYear: Option[Int],
-                            toYear: Option[Int],
-                            dLeagueFlag: Option[String],
-                            gamesPlayedFlag: Option[String],
-                            draftYear: Option[String],
-                            draftRound: Option[String],
-                            draftNumber: Option[String]) extends ConvertedResultSetResponse
+final case class PlayerInfo(playerId: jl.Integer,
+                            firstName: String,
+                            lastName: String,
+                            displayFirstLast: String,
+                            displayLastCommaFirst: String,
+                            displayInitialLast: String,
+                            birthday: String, //YYYY-MM-DDTHH:MM:SS
+                            school: String,
+                            country: String,
+                            lastAffiliation: String,
+                            height: String,
+                            weight: String,
+                            yearsExerience: jl.Integer,
+                            jerseyNumber: String,
+                            position: String,
+                            rosterStatus: String,
+                            teamId: jl.Integer,
+                            teamName: String,
+                            teamAbbreviation: String,
+                            teamCode: String,
+                            teamCity: String,
+                            playerCode: String,
+                            fromYear: jl.Integer,
+                            toYear: jl.Integer,
+                            dLeagueFlag: String,
+                            gamesPlayedFlag: String,
+                            draftYear: String,
+                            draftRound: String,
+                            draftNumber: String) extends ConvertedResultSetResponse
 
 private[rrdinsights] case object PlayerInfoConverter extends ResultSetRawResponseConverter[PlayerInfo] {
   override val name: String = "CommonPlayerInfo"
@@ -79,13 +79,13 @@ private[rrdinsights] case object PlayerInfoConverter extends ResultSetRawRespons
       transformToString(row(27))))
 }
 
-final case class PlayerHeadlineStats(playerId: Option[Int],
-                                     playerName: Option[String],
-                                     timeFrame: Option[String],
-                                     points: Option[Double],
-                                     assists: Option[Double],
-                                     rebounds: Option[Double],
-                                     playerImpact: Option[Double]) extends ConvertedResultSetResponse
+final case class PlayerHeadlineStats(playerId: jl.Integer,
+                                     playerName: String,
+                                     timeFrame: String,
+                                     points: jl.Double,
+                                     assists: jl.Double,
+                                     rebounds: jl.Double,
+                                     playerImpact: jl.Double) extends ConvertedResultSetResponse
 
 private[rrdinsights] case object PlayerHeadlineStatsConverter extends ResultSetRawResponseConverter[PlayerHeadlineStats] {
   override val name: String = "PlayerHeadlineStats"

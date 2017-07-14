@@ -1,49 +1,50 @@
 package com.rrdinsights.models
 
 import com.rrdinsights.models.Utils._
+import java.{lang => jl}
 
 final case class PlayByPlay(events: Seq[PlayByPlayEvent])
 
 final case class PlayByPlayResponse(resource: String,
                                     playByPlay: PlayByPlay)
 
-final case class PlayByPlayEvent(gameId: Option[String],
-                                 eventNumber: Option[Int],
-                                 eventMessageType: Option[Int], // TODO - convert to case objects
-                                 eventActionType: Option[Int], // TODO - convert to case objects
-                                 period: Option[Int],
-                                 wcTimeString: Option[String], // TODO - find out what this means
-                                 pcTimeString: Option[String], // TODO - find out what this means
-                                 homeDescription: Option[String],
-                                 neutralDescription: Option[String],
-                                 awayDescription: Option[String],
+final case class PlayByPlayEvent(gameId: String,
+                                 eventNumber: jl.Integer,
+                                 eventMessageType: jl.Integer, // TODO - convert to case objects
+                                 eventActionType: jl.Integer, // TODO - convert to case objects
+                                 period: jl.Integer,
+                                 wcTimeString: String, // TODO - find out what this means
+                                 pcTimeString: String, // TODO - find out what this means
+                                 homeDescription: String,
+                                 neutralDescription: String,
+                                 awayDescription: String,
 
-                                 homeScore: Option[Int],
-                                 awayScore: Option[Int],
+                                 homeScore: jl.Integer,
+                                 awayScore: jl.Integer,
 
-                                 player1Type: Option[Int], // TODO - find out what this means
-                                 player1Id: Option[Int],
-                                 player1Name: Option[String],
-                                 player1TeamId: Option[Int],
-                                 player1TeamCity: Option[String],
-                                 player1TeamNickname: Option[String],
-                                 player1TeamAbbreviation: Option[String],
+                                 player1Type: jl.Integer, // TODO - find out what this means
+                                 player1Id: jl.Integer,
+                                 player1Name: String,
+                                 player1TeamId: jl.Integer,
+                                 player1TeamCity: String,
+                                 player1TeamNickname: String,
+                                 player1TeamAbbreviation: String,
 
-                                 player2Type: Option[Int], // TODO - find out what this means
-                                 player2Id: Option[Int],
-                                 player2Name: Option[String],
-                                 player2TeamId: Option[Int],
-                                 player2TeamCity: Option[String],
-                                 player2TeamNickname: Option[String],
-                                 player2TeamAbbreviation: Option[String],
+                                 player2Type: jl.Integer, // TODO - find out what this means
+                                 player2Id: jl.Integer,
+                                 player2Name: String,
+                                 player2TeamId: jl.Integer,
+                                 player2TeamCity: String,
+                                 player2TeamNickname: String,
+                                 player2TeamAbbreviation: String,
 
-                                 player3Type: Option[Int], // TODO - find out what this means
-                                 player3Id: Option[Int],
-                                 player3Name: Option[String],
-                                 player3TeamId: Option[Int],
-                                 player3TeamCity: Option[String],
-                                 player3TeamNickname: Option[String],
-                                 player3TeamAbbreviation: Option[String]) extends ConvertedResultSetResponse
+                                 player3Type: jl.Integer, // TODO - find out what this means
+                                 player3Id: jl.Integer,
+                                 player3Name: String,
+                                 player3TeamId: jl.Integer,
+                                 player3TeamCity: String,
+                                 player3TeamNickname: String,
+                                 player3TeamAbbreviation: String) extends ConvertedResultSetResponse
 
 private[rrdinsights] case object PlayByPlayEventConverter extends ResultSetRawResponseConverter[PlayByPlayEvent] {
   override val name: String = "PlayByPlay"
@@ -93,13 +94,13 @@ private[rrdinsights] case object PlayByPlayEventConverter extends ResultSetRawRe
     })
 
 
-  private def convertScoreString(score: Option[String]): (Option[Int], Option[Int]) = {
-    val splitScore = score.map(_.split("-"))
-    (splitScore.map(v => v(0).trim.toInt), splitScore.map(v => v(1).trim.toInt))
+  private def convertScoreString(score: String): (jl.Integer, jl.Integer) = {
+    val splitScore = Option(score).map(_.split("-"))
+    (splitScore.map(v => Integer.valueOf(v(0).trim)).orNull, splitScore.map(v => Integer.valueOf(v(0).trim)).orNull)
   }
 }
 
-private case class Score(homeScore: Option[Int], awayScore: Option[Int])
+private case class Score(homeScore: jl.Integer, awayScore: jl.Integer)
 
 
 final case class PlayByPlayRawResponse(override val resource: String,

@@ -1,24 +1,35 @@
 package com.rrdinsights.models
 
-private[models] object Utils {
-  def transformToT[T](value: Any): Option[T] =
-   Option(value).map(_.asInstanceOf[T])
+import java.{lang => jl}
 
-  def transformToString(value: Any): Option[String] = {
-    val transformed = transformToT[String](value).map(_.trim)
-    if (transformed.forall(_.isEmpty)) None else transformed
+private[models] object Utils {
+  def transformToT[T](value: Any): T =
+    value.asInstanceOf[T]
+
+  def transformToString(value: Any): String = {
+    val transformed = transformToT[String](value)
+    if (transformed == null || transformed.trim.isEmpty) null else transformed.trim
   }
 
-  def transformToInt(value: Any): Option[Int] =
-    transformToT[BigInt](value).map(_.intValue())
+  def transformToInt(value: Any): jl.Integer = {
+    val transformed = transformToT[BigInt](value)
+    if (transformed != null) jl.Integer.valueOf(transformed.intValue()) else null
+  }
 
-  def transformToDouble(value: Any): Option[Double] =
-    transformToT[BigDecimal](value).map(_.doubleValue())
+  def transformToDouble(value: Any): jl.Double = {
+    val transformed = transformToT[BigDecimal](value)
+    if (transformed != null) jl.Double.valueOf(transformed.doubleValue()) else null
+  }
 
-  def convertMinutesToDouble(time: String): Double ={
-    val splitTime = time.split(":")
-    val min = splitTime(0).toDouble
-    val sec = splitTime(1).toDouble/60.0
-    min+sec
+
+  def convertMinutesToDouble(time: String): jl.Double = {
+    if (time != null && time.nonEmpty && time.contains(":")) {
+      val splitTime = time.split(":")
+      val min = splitTime(0).toDouble
+      val sec = splitTime(1).toDouble / 60.0
+      min + sec
+    } else {
+      null
+    }
   }
 }

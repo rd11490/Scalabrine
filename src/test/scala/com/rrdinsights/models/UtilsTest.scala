@@ -12,8 +12,8 @@ class UtilsTest extends TestSpec {
     val testTime2 = "12:06"
     val testTime3 = "00:06"
 
-    assert(Utils.convertMinutesToDouble(testTime1) === 240.0)
-    assert(Utils.convertMinutesToDouble(testTime2) === 12.1)
-    assert(Utils.convertMinutesToDouble(testTime3) === 0.1)
+    assert(Utils.convertMinutesToDouble(testTime1).doubleValue() === 240.0)
+    assert(Utils.convertMinutesToDouble(testTime2).doubleValue() === 12.1)
+    assert(Utils.convertMinutesToDouble(testTime3).doubleValue() === 0.1)
   }
 }

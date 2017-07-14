@@ -1,6 +1,7 @@
 package com.rrdinsights.models
 
 import com.rrdinsights.models.Utils._
+import java.{lang => jl}
 
 final case class ShotChartDetails(shots: Seq[Shot],
                                   leagueAverages: Seq[ShotAverages])
@@ -8,29 +9,29 @@ final case class ShotChartDetails(shots: Seq[Shot],
 final case class ShotChartDetailsResponse(resource: String,
                                      teamGameLog: ShotChartDetails)
 
-final case class Shot(gridType: Option[String],
-                      gameId: Option[String],
-                      gameEventId: Option[Int],
-                      playerId: Option[Int],
-                      playerName: Option[String],
-                      teamId: Option[Int],
-                      teamName: Option[String],
-                      period: Option[Int],
-                      minutesRemaining: Option[Int],
-                      secondsRemaining: Option[Int],
-                      eventType: Option[String],
-                      actionType: Option[String],
-                      shotZoneBasic: Option[String],
-                      shotZoneArea: Option[String],
-                      shotZoneRange: Option[String],
-                      shotDistance: Option[Int],
-                      xCoordinate: Option[Int],
-                      yCoordinate: Option[Int],
-                      shotAttemptedFlag: Option[Int],
-                      shotMadeFlag: Option[Int],
-                      gameDate: Option[String],
-                      homeTeam: Option[String],
-                      awayTeam: Option[String]) extends ConvertedResultSetResponse
+final case class Shot(gridType: String,
+                      gameId: String,
+                      gameEventId: jl.Integer,
+                      playerId: jl.Integer,
+                      playerName: String,
+                      teamId: jl.Integer,
+                      teamName: String,
+                      period: jl.Integer,
+                      minutesRemaining: jl.Integer,
+                      secondsRemaining: jl.Integer,
+                      eventType: String,
+                      actionType: String,
+                      shotZoneBasic: String,
+                      shotZoneArea: String,
+                      shotZoneRange: String,
+                      shotDistance: jl.Integer,
+                      xCoordinate: jl.Integer,
+                      yCoordinate: jl.Integer,
+                      shotAttemptedFlag: jl.Integer,
+                      shotMadeFlag: jl.Integer,
+                      gameDate: String,
+                      homeTeam: String,
+                      awayTeam: String) extends ConvertedResultSetResponse
 
 private[rrdinsights] case object ShotConverter extends ResultSetRawResponseConverter[Shot] {
   override val name: String = "Shot_Chart_Detail"
@@ -62,13 +63,13 @@ private[rrdinsights] case object ShotConverter extends ResultSetRawResponseConve
       transformToString(row(22))))
 }
 
-final case class ShotAverages(gridType: Option[String],
-                              shotZoneBasic: Option[String],
-                              shotZoneArea: Option[String],
-                              shotZoneRange: Option[String],
-                              fieldGoalAttempt: Option[Int],
-                              fieldGoalMade: Option[Int],
-                              fieldGoalPercentage: Option[Double]
+final case class ShotAverages(gridType: String,
+                              shotZoneBasic: String,
+                              shotZoneArea: String,
+                              shotZoneRange: String,
+                              fieldGoalAttempt: jl.Integer,
+                              fieldGoalMade: jl.Integer,
+                              fieldGoalPercentage: jl.Double
                              ) extends ConvertedResultSetResponse
 
 private[rrdinsights] case object ShotAveragesConverter extends ResultSetRawResponseConverter[ShotAverages] {

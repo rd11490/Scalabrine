@@ -1,44 +1,45 @@
 package com.rrdinsights.models
 
 import com.rrdinsights.models.Utils._
+import java.{lang => jl}
 
 final case class TeamGameLog(games: Seq[GameLog])
 
 final case class TeamGameLogResponse(resource: String,
                                      teamGameLog: TeamGameLog)
 
-final case class GameLog(teamId: Option[Int],
-                         gameId: Option[String],
-                         gameDate: Option[String],
-                         matchup: Option[String],
-                         result: Option[String], // TODO - convert to case objects
-                         wins: Option[Int],
-                         losses: Option[Int],
-                         winPercentage: Option[Double],
-                         minutes: Option[Double],
+final case class GameLog(teamId: jl.Integer,
+                         gameId: String,
+                         gameDate: String,
+                         matchup: String,
+                         result: String, // TODO - convert to case objects
+                         wins: jl.Integer,
+                         losses: jl.Integer,
+                         winPercentage: jl.Double,
+                         minutes: jl.Double,
 
-                         fieldGoalsMade: Option[Int],
-                         fieldGoalAttempts: Option[Int],
-                         fieldGoalPercentage: Option[Double],
+                         fieldGoalsMade: jl.Integer,
+                         fieldGoalAttempts: jl.Integer,
+                         fieldGoalPercentage: jl.Double,
 
-                         threePointFieldGoalsMade: Option[Int],
-                         threePointFieldGoalAttempts: Option[Int],
-                         threePointFieldGoalPercentage: Option[Double],
+                         threePointFieldGoalsMade: jl.Integer,
+                         threePointFieldGoalAttempts: jl.Integer,
+                         threePointFieldGoalPercentage: jl.Double,
 
-                         freeThrowsMade: Option[Int],
-                         freeThrowAttempts: Option[Int],
-                         freeThrowPercentage: Option[Double],
+                         freeThrowsMade: jl.Integer,
+                         freeThrowAttempts: jl.Integer,
+                         freeThrowPercentage: jl.Double,
 
-                         offensiveRebounds: Option[Int],
-                         defensiveRebounds: Option[Int],
-                         totalRebounds: Option[Int],
+                         offensiveRebounds: jl.Integer,
+                         defensiveRebounds: jl.Integer,
+                         totalRebounds: jl.Integer,
 
-                         assists: Option[Int],
-                         steals: Option[Int],
-                         blocks: Option[Int],
-                         turnovers: Option[Int],
-                         personalFouls: Option[Int],
-                         points: Option[Int]) extends ConvertedResultSetResponse
+                         assists: jl.Integer,
+                         steals: jl.Integer,
+                         blocks: jl.Integer,
+                         turnovers: jl.Integer,
+                         personalFouls: jl.Integer,
+                         points: jl.Integer) extends ConvertedResultSetResponse
 
 private[rrdinsights] case object GameConverter extends ResultSetRawResponseConverter[GameLog] {
   override val name: String = "TeamGameLog"
@@ -79,7 +80,7 @@ private[rrdinsights] case object GameConverter extends ResultSetRawResponseConve
       transformToInt(row(25)),
       transformToInt(row(26))))
 
-  private def minutesToDouble(minutes: Option[Int]): Option[Double] = minutes.map(_.toDouble)
+  private def minutesToDouble(minutes: jl.Integer): jl.Double = minutes.toDouble
 }
 
 

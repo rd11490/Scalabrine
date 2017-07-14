@@ -1,7 +1,7 @@
 package com.rrdinsights.utils
 
 /**
-  * Stole from David Pollak's Control Structure.
+  * From David Pollak's Control Structure.
   */
 object Control {
 
