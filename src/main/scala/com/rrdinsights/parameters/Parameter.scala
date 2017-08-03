@@ -102,6 +102,13 @@ object TeamIdParameter extends Parameter {
   val UtahJazz: ParameterValue = newParameterValue("1610612762")
   val WashingtonWizards: ParameterValue = newParameterValue("1610612764")
 
+  val TeamIds: Seq[ParameterValue] = Seq(
+    AtlantaHawks, BostonCeltics, BrooklynNets, CharlotteHornets, ChicagoBulls, ClevelandCavaliers, DallasMavericks,
+    DenverNuggets, DetroitPistons, GoldenStateWarriors, HoustonRockets, IndianaPacers, LosAngelesClippers,
+    LosAngelesLakers, MemphisGrizzlies, MiamiHeat, MilwaukeeBucks, MinnesotaTimberwolves, NewOrleansPelicans,
+    NewYorkKnicks, OklahomaCityThunder, OrlandoMagic, Philadelphia76ers, PhoenixSuns, PortlandTrailBlazers,
+    SacramentoKings, SanAntonioSpurs, TorontoRaptors, UtahJazz, WashingtonWizards)
+
   override val defaultParameterValue: ParameterValue = newParameterValue("0")
 }
 

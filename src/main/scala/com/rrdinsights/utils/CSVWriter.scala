@@ -8,11 +8,22 @@ object CSVWriter {
 
     def write(filePath: String): Unit = {
       val writer = new PrintWriter(new FileWriter(filePath))
+      seq.map(v => {
+        v.productIterator.map(c => Option(c) match {
+          case Some(x) => convertToString(x)
+          case None => ""
+        }).mkString(",")
+      }).foreach(writer.println)
 
+      writer.close()
     }
-
-    /*def toCSV(prod: T): String = {
-    }*/
   }
+
+  private def convertToString(s: Any): String =
+    if (s.isInstanceOf[String]) {
+      "\"" + s + "\""
+    } else {
+      s.toString
+    }
 
 }
