@@ -1,13 +1,15 @@
-package com.rrdinsights
+package com.rrdinsights.scalabrine
 
-import com.rrdinsights.endpoints._
-import com.rrdinsights.models._
-import com.rrdinsights.parameters.Headers
+import com.rrdinsights.scalabrine.endpoints._
+import com.rrdinsights.scalabrine.models._
+import com.rrdinsights.scalabrine.parameters.Headers
+import com.rrdinsights.scalabrine.utils.Control._
+import org.apache.http.ConnectionReuseStrategy
+import org.apache.http.client.config.RequestConfig
 import org.apache.http.client.methods.CloseableHttpResponse
 import org.apache.http.impl.client.HttpClientBuilder
-import org.json4s.{DefaultFormats, JValue}
 import org.json4s.jackson.JsonMethods._
-import com.rrdinsights.utils.Control._
+import org.json4s.{DefaultFormats, JValue}
 
 import scala.io.Source
 
@@ -17,15 +19,28 @@ import scala.io.Source
 object ScalabrineClient {
   implicit val formats = DefaultFormats
 
+
+
   private def get[E <: Endpoint](endpoint: E): JValue = {
-    using(HttpClientBuilder.create().setDefaultHeaders(Headers.headers).build()) { client =>
+    val httpParams = RequestConfig.custom().
+      setConnectionRequestTimeout(20000)
+      .setSocketTimeout(20000)
+      .setConnectTimeout(20000)
+      .build()
+
+    val httpClient = HttpClientBuilder.create()
+      .setDefaultHeaders(Headers.headers)
+      .setDefaultRequestConfig(httpParams)
+      .build()
+
+    using(httpClient) { client =>
       val resp = endpoint.get(client)
-      val parsed = parse(parseResponse(resp), useBigDecimalForDouble = true)
+      val parsedResp = parseResponse(resp)
+      val parsed = parse(parsedResp, useBigDecimalForDouble = true)
       resp.close()
       parsed
     }
   }
-
 
   def getBoxScoreSummary(boxScore: BoxScoreEndpoint): BoxScoreSummaryResponse =
     get[BoxScoreEndpoint](boxScore)
@@ -45,13 +60,13 @@ object ScalabrineClient {
 
   def getTeamGameLog(teamGameLog: TeamGameLogEndpoint): TeamGameLogResponse =
     get[TeamGameLogEndpoint](teamGameLog)
-    .extract[TeamGameLogRawResponse]
-    .toTeamGameLogResponse
+      .extract[TeamGameLogRawResponse]
+      .toTeamGameLogResponse
 
   def getCommonPlayerInfo(commonPlayerInfo: CommonPlayerInfoEndpoint): CommonPlayerInfoResponse =
     get[CommonPlayerInfoEndpoint](commonPlayerInfo)
-    .extract[CommonPlayerInfoRawResponse]
-    .toCommonPlayerInfoResponse
+      .extract[CommonPlayerInfoRawResponse]
+      .toCommonPlayerInfoResponse
 
   private def parseResponse(response: CloseableHttpResponse): String = {
     val is = response.getEntity.getContent
@@ -59,11 +74,3 @@ object ScalabrineClient {
   }
 
 }
-
-/*
-http://stats.nba.com/stats/teaminfocommon?LeagueID=00&Season=2016-17&SeasonType=Regular Season&TeamID=1610612738
-base = http://stats.nba.com/stats/
-endpoint = teaminfocommon
-
-Parameters = LeagueID=00
- */

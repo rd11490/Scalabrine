@@ -1,8 +1,8 @@
-package com.rrdinsights
+package com.rrdinsights.scalabrine
 
-import org.scalatest.{FunSuite, Matchers}
-import org.scalatest.mockito.MockitoSugar
 import org.scalactic.TypeCheckedTripleEquals
+import org.scalatest.mockito.MockitoSugar
+import org.scalatest.{FunSuite, Matchers}
 
 abstract class TestSpec extends FunSuite with TypeCheckedTripleEquals with Matchers with MockitoSugar {
 

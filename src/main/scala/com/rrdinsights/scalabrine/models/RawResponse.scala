@@ -1,4 +1,4 @@
-package com.rrdinsights.models
+package com.rrdinsights.scalabrine.models
 
 private[rrdinsights] trait RawResponse {
   def resource: String

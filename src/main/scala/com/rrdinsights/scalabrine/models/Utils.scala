@@ -1,4 +1,4 @@
-package com.rrdinsights.models
+package com.rrdinsights.scalabrine.models
 
 import java.{lang => jl}
 

@@ -1,4 +1,4 @@
-package com.rrdinsights.utils
+package com.rrdinsights.scalabrine.utils
 
 /**
   * From David Pollak's Control Structure.

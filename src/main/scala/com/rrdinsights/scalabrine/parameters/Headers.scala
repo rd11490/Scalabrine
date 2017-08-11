@@ -1,4 +1,4 @@
-package com.rrdinsights.parameters
+package com.rrdinsights.scalabrine.parameters
 
 import org.apache.http.message.BasicHeader
 

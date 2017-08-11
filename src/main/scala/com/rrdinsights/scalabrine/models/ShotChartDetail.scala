@@ -1,6 +1,6 @@
-package com.rrdinsights.models
+package com.rrdinsights.scalabrine.models
 
-import com.rrdinsights.models.Utils._
+import com.rrdinsights.scalabrine.models.Utils._
 import java.{lang => jl}
 
 final case class ShotChartDetails(shots: Seq[Shot],

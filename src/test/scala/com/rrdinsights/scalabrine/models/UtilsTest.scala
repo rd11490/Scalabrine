@@ -1,6 +1,6 @@
-package com.rrdinsights.models
+package com.rrdinsights.scalabrine.models
 
-import com.rrdinsights.TestSpec
+import com.rrdinsights.scalabrine.TestSpec
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 

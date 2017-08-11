@@ -1,7 +1,7 @@
-package com.rrdinsights.models
+package com.rrdinsights.scalabrine.models
 
-import com.rrdinsights.parameters.{GameIdParameter, ParameterValue}
-import com.rrdinsights.models.Utils._
+import com.rrdinsights.scalabrine.parameters.{GameIdParameter, ParameterValue}
+import com.rrdinsights.scalabrine.models.Utils._
 import java.{lang => jl}
 
 final case class BoxScoreSummary(gameSummary: Option[GameSummary],

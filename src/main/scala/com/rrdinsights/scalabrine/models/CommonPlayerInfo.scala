@@ -1,7 +1,7 @@
-package com.rrdinsights.models
+package com.rrdinsights.scalabrine.models
 
 import java.{lang => jl}
-import com.rrdinsights.models.Utils._
+import com.rrdinsights.scalabrine.models.Utils._
 
 final case class CommonPlayerInfo(playerInfo: Option[PlayerInfo],
                                   playerHeadlineStats: Option[PlayerHeadlineStats])

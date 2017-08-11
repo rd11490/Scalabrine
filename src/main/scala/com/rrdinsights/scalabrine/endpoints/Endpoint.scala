@@ -1,6 +1,6 @@
-package com.rrdinsights.endpoints
+package com.rrdinsights.scalabrine.endpoints
 
-import com.rrdinsights.parameters._
+import com.rrdinsights.scalabrine.parameters._
 import org.apache.http.client.methods.{CloseableHttpResponse, HttpGet}
 import org.apache.http.impl.client.CloseableHttpClient
 
@@ -15,19 +15,21 @@ sealed trait Endpoint {
   def url: String = Endpoint.BaseUrl + endpoint + "?" + params.map(_.toUrl).mkString("&")
 
   def get(client: CloseableHttpClient): CloseableHttpResponse = {
-    val get = new HttpGet(url)
-    client.execute(get)
+    try {
+      val get = new HttpGet(url)
+      client.execute(get)
+    } catch {
+      case ex: Throwable => {
+        println(ex)
+        throw ex
+      }
+    }
+
   }
 }
 
 private[rrdinsights] object Endpoint {
   private val BaseUrl: String = "http://stats.nba.com/stats/"
-
-  def parseResponse(response: CloseableHttpResponse): String = {
-    val is = response.getEntity.getContent
-    response.close()
-    Source.fromInputStream(is).getLines().mkString(" ")
-  }
 }
 
 //
@@ -39,13 +41,6 @@ final case class TeamInfoCommonEndpoint(leagueId: ParameterValue = LeagueIdParam
   override val endpoint: String = "teaminfocommon"
 
   override val params: Seq[ParameterValue] = Seq(leagueId, season, seasonType)
-}
-
-private[rrdinsights] object TeamInfoCommonEndpoint {
-  def parseResponse(response: CloseableHttpResponse): String = {
-    val respJson = Endpoint.parseResponse(response)
-    respJson
-  }
 }
 
 //

@@ -1,7 +1,7 @@
-package com.rrdinsights.endpoints
+package com.rrdinsights.scalabrine.endpoints
 
-import com.rrdinsights.parameters._
-import com.rrdinsights.{ScalabrineClient, TestSpec}
+import com.rrdinsights.scalabrine.parameters._
+import com.rrdinsights.scalabrine.{ScalabrineClient, TestSpec}
 import org.json4s.DefaultFormats
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -20,7 +20,7 @@ final class EndPointTest extends TestSpec {
   private val AwayTeamName: String = "Bucks"
 
 
-  test("boxscore endpoint") {
+  ignore("boxscore endpoint") {
     val param = GameIdParameter.newParameterValue(GameID)
     val boxScore = BoxScoreEndpoint(param)
     val parsedResponse = ScalabrineClient.getBoxScoreSummary(boxScore)
@@ -56,23 +56,23 @@ final class EndPointTest extends TestSpec {
 
     parsedResponse.boxScoreSummary.officials.foreach(v => {
       v.firstName match {
-          case "Tom" => assert(v.lastName === "Washington")
-          case "Mark" => assert(v.lastName === "Lindsay")
-          case "Marat" => assert(v.lastName === "Kogut")
-          case n => fail(s"official $n not expected")
-        }
-      })
+        case "Tom" => assert(v.lastName === "Washington")
+        case "Mark" => assert(v.lastName === "Lindsay")
+        case "Marat" => assert(v.lastName === "Kogut")
+        case n => fail(s"official $n not expected")
+      }
+    })
 
     val players = parsedResponse.boxScoreSummary.inactivePlayers
-      assert(players.size === 4)
-      val inactivePlayer = players.find(_.playerId.intValue() === 203114).getOrElse(fail(s"Player 203114 (Kris Middleton) not found"))
-      assert(inactivePlayer.firstName === "Khris")
-      assert(inactivePlayer.lastName === "Middleton")
-      assert(inactivePlayer.number === "22")
-      assert(inactivePlayer.teamAbbreviation === AwayTeamAbbreviation)
-      assert(inactivePlayer.teamCity === AwayTeamCity)
-      assert(inactivePlayer.teamName === AwayTeamName)
-      assert(inactivePlayer.teamId.intValue() === 1610612749)
+    assert(players.size === 4)
+    val inactivePlayer = players.find(_.playerId.intValue() === 203114).getOrElse(fail(s"Player 203114 (Kris Middleton) not found"))
+    assert(inactivePlayer.firstName === "Khris")
+    assert(inactivePlayer.lastName === "Middleton")
+    assert(inactivePlayer.number === "22")
+    assert(inactivePlayer.teamAbbreviation === AwayTeamAbbreviation)
+    assert(inactivePlayer.teamCity === AwayTeamCity)
+    assert(inactivePlayer.teamName === AwayTeamName)
+    assert(inactivePlayer.teamId.intValue() === 1610612749)
 
     parsedResponse.boxScoreSummary.awayStats.scoreLine.foreach(v => {
       assert(v.gameId === GameID)
@@ -198,7 +198,7 @@ final class EndPointTest extends TestSpec {
     })
   }
 
-  test("boxscore advanced endpoint") {
+  ignore("boxscore advanced endpoint") {
     val param = GameIdParameter.newParameterValue(GameID)
     val boxScore = AdvancedBoxScoreEndpoint(param)
     val parsedResponse = ScalabrineClient.getAdvancedBoxScore(boxScore)
@@ -221,7 +221,7 @@ final class EndPointTest extends TestSpec {
       assert(p.playerName === "Michael Beasley")
       assert(p.startPosition === "F")
       assert(p.comment === null)
-      assert(p.minutes.doubleValue() === 34.0 + 56.0/60.0)
+      assert(p.minutes.doubleValue() === 34.0 + 56.0 / 60.0)
       assert(p.offensiveRating.doubleValue() === 93.5)
       assert(p.defensiveRating.doubleValue() === 113.3)
       assert(p.netRating.doubleValue() === -19.9)
@@ -268,7 +268,7 @@ final class EndPointTest extends TestSpec {
     })
   }
 
-  test("play by play endpoint") {
+  ignore("play by play endpoint") {
     val param = GameIdParameter.newParameterValue(GameID)
     val playByPlay = PlayByPlayEndpoint(param)
     val parsedResponse = ScalabrineClient.getPlayByPlay(playByPlay)
@@ -280,8 +280,8 @@ final class EndPointTest extends TestSpec {
     assert(parsedResponse.playByPlay.events.size === 448)
   }
 
-  test("team game log endpoint") {
-    val teamId = TeamIdParameter.BostonCeltics
+  ignore("team game log endpoint") {
+    val teamId = TeamIdParameter.MiamiHeat
     val season = SeasonParameter.Season201617
     val teamGameLog = TeamGameLogEndpoint(teamId, season)
     val parsedResponse = ScalabrineClient.getTeamGameLog(teamGameLog)
@@ -293,7 +293,7 @@ final class EndPointTest extends TestSpec {
     assert(parsedResponse.teamGameLog.games.size === 82)
   }
 
-  test("common player info endpoint") {
+  ignore("common player info endpoint") {
     val playerId = PlayerIdParameter.newParameterValue("201566")
     val playerCommonInfo = CommonPlayerInfoEndpoint(playerId)
     val parsedResponse = ScalabrineClient.getCommonPlayerInfo(playerCommonInfo)
@@ -303,5 +303,16 @@ final class EndPointTest extends TestSpec {
 
     // results
     assert(parsedResponse.commonPlayerInfo.playerInfo.map(_.playerId).getOrElse(0) === 201566)
+  }
+
+  ignore("test grabbing a bunch of teams at once") {
+    TeamIdParameter.TeamIds
+      .map(v => TeamGameLogEndpoint(v, SeasonParameter.Season201617))
+      .map(v => {
+        Thread.sleep(1000)
+        ScalabrineClient.getTeamGameLog(v)
+      })
+      .flatMap(_.teamGameLog.games)
+      .foreach(println)
   }
 }

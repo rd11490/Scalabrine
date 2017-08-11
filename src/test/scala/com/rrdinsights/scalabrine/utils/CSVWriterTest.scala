@@ -1,8 +1,8 @@
-package com.rrdinsights.utils
+package com.rrdinsights.scalabrine.utils
 
-import com.rrdinsights.TestSpec
 import java.{lang => jl}
 
+import com.rrdinsights.scalabrine.TestSpec
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
@@ -11,9 +11,9 @@ final class CSVWriterTest extends TestSpec {
 
   ignore("write test") {
 
-    import CSVWriter._
+    import com.rrdinsights.scalabrine.utils.CSVWriter._
 
-    val cases = Seq(
+    Seq(
       TestClass("test1", 1, 1L, active = true),
       TestClass("test2", 2, 2L, active = true),
       TestClass("test3", 3, 3L, active = false)
@@ -22,13 +22,20 @@ final class CSVWriterTest extends TestSpec {
 
   ignore("write test2") {
 
-    import CSVWriter._
+    import com.rrdinsights.scalabrine.utils.CSVWriter._
 
-    val cases = Seq(
+    Seq(
       TestClass2("test1", 1, 1.0),
       TestClass2("test2", 2, null),
       TestClass2("test3", null, null)
     ).write("test2.csv")
+  }
+
+  ignore("write test3") {
+
+    import com.rrdinsights.scalabrine.utils.CSVWriter._
+
+    Seq.empty[TestClass].write("test3.csv")
   }
 }
 
