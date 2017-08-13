@@ -141,6 +141,16 @@ final case class ShotChartDetailEndpoint(playerId: ParameterValue,
       pointDiff, rookieYear, gameSegment, month, clutchTime)
 }
 
+final case class CommonTeamRoster(teamId: ParameterValue,
+                                  season: ParameterValue,
+                                  leagueId: ParameterValue = LeagueIdParameter.defaultParameterValue) extends Endpoint {
+
+  override val endpoint: String = "commonteamroster"
+
+  override val params: Seq[ParameterValue] = Seq(teamId, leagueId, season)
+}
+
+
 /*
 http://stats.nba.com/stats/shotchartdetail?Period=0&VsConference=&LeagueID=00&LastNGames=0&TeamID=0&Position=&Location=&Outcome=&ContextMeasure=FGA&DateFrom=&StartPeriod=&DateTo=&OpponentTeamID=0&ContextFilter=&RangeType=&Season=&AheadBehind=&PlayerID=201935&EndRange=&VsDivision=&PointDiff=&RookieYear=&GameSegment=&Month=0&ClutchTime=&StartRange=&EndPeriod=&SeasonType=Regular+Season&SeasonSegment=&GameID=&PlayerPosition=
  */
