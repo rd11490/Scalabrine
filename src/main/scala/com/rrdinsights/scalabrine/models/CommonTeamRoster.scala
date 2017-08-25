@@ -22,7 +22,7 @@ final case class Player(teamId: jl.Integer,
                         age: jl.Integer,
                         experience: String,
                         school: String,
-                        playerId: jl.Integer)
+                        playerId: jl.Integer) extends ConvertedResultSetResponse
 
 private[rrdinsights] case object PlayerConverter extends ResultSetRawResponseConverter[Player] {
   override val name: String = "CommonTeamRoster"
@@ -54,7 +54,7 @@ final case class Coach(teamId: jl.Integer,
                        coachCode: String,
                        isAssistant: Boolean,
                        coachType: String,
-                       school: String)
+                       school: String) extends ConvertedResultSetResponse
 
 private[rrdinsights] case object CoachConverter extends ResultSetRawResponseConverter[Coach] {
   override val name: String = "Coaches"

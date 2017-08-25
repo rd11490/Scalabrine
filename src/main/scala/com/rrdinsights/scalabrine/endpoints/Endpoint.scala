@@ -141,7 +141,7 @@ final case class ShotChartDetailEndpoint(playerId: ParameterValue,
       pointDiff, rookieYear, gameSegment, month, clutchTime)
 }
 
-final case class CommonTeamRoster(teamId: ParameterValue,
+final case class CommonTeamRosterEndpoint(teamId: ParameterValue,
                                   season: ParameterValue,
                                   leagueId: ParameterValue = LeagueIdParameter.defaultParameterValue) extends Endpoint {
 

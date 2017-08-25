@@ -4,7 +4,6 @@ import com.rrdinsights.scalabrine.endpoints._
 import com.rrdinsights.scalabrine.models._
 import com.rrdinsights.scalabrine.parameters.Headers
 import com.rrdinsights.scalabrine.utils.Control._
-import org.apache.http.ConnectionReuseStrategy
 import org.apache.http.client.config.RequestConfig
 import org.apache.http.client.methods.CloseableHttpResponse
 import org.apache.http.impl.client.HttpClientBuilder
@@ -17,9 +16,7 @@ import scala.io.Source
   * ScalabrineClient is a scala HTTP client for the stats.nba.com api
   */
 object ScalabrineClient {
-  implicit val formats = DefaultFormats
-
-
+  implicit val formats: DefaultFormats.type = DefaultFormats
 
   private def get[E <: Endpoint](endpoint: E): JValue = {
     val httpParams = RequestConfig.custom().
@@ -67,6 +64,11 @@ object ScalabrineClient {
     get[CommonPlayerInfoEndpoint](commonPlayerInfo)
       .extract[CommonPlayerInfoRawResponse]
       .toCommonPlayerInfoResponse
+
+  def getCommonTeamRoster(commonTeamRoster: CommonTeamRosterEndpoint): CommonTeamRosterResponse =
+    get[CommonTeamRosterEndpoint](commonTeamRoster)
+      .extract[CommonTeamRosterRawResponse]
+      .toCommonTeamRosterResponse
 
   private def parseResponse(response: CloseableHttpResponse): String = {
     val is = response.getEntity.getContent
