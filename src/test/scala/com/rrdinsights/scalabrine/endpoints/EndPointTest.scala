@@ -315,4 +315,19 @@ final class EndPointTest extends TestSpec {
       .flatMap(_.teamGameLog.games)
       .foreach(println)
   }
+
+  ignore("test scoreboard") {
+    val gameDate = GameDateParameter.newParameterValue("11/04/2016")
+    val scoreboard = ScoreboardEndpoint(gameDate)
+
+    val parsedResponse = ScalabrineClient.getScoreboard(scoreboard)
+
+    // resource
+    assert(parsedResponse.resource === "scoreboardV2")
+
+    // results
+    assert(parsedResponse.scoreboard.gameHeader.size === 9)
+    assert(parsedResponse.scoreboard.easternConferenceStandings.size === 15)
+    assert(parsedResponse.scoreboard.westernConferenceStandings.size === 15)
+  }
 }

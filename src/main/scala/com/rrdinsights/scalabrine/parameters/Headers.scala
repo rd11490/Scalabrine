@@ -12,6 +12,7 @@ object Headers {
   val Accept: ParameterValue = Parameter.newParameterValue("Accept", "application/json")
   val CacheControl: ParameterValue = Parameter.newParameterValue("Cache-Control", "max-age=0")
   val Connection: ParameterValue = Parameter.newParameterValue("Connection", "keep-alive")
+  val Referer: ParameterValue = Parameter.newParameterValue("referer", "http://stats.nba.com/scores/")
 
   val headers: java.util.List[BasicHeader] = Seq(
     AcceptEncoding,
@@ -20,6 +21,7 @@ object Headers {
     UserAgent,
     Accept,
     CacheControl,
-    Connection)
+    Connection,
+    Referer)
     .map(v => new BasicHeader(v.name, v.value)).asJava
 }

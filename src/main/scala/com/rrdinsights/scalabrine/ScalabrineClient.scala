@@ -70,6 +70,12 @@ object ScalabrineClient {
       .extract[CommonTeamRosterRawResponse]
       .toCommonTeamRosterResponse
 
+  def getScoreboard(scoreboard: ScoreboardEndpoint): ScoreboardResponse =
+    get[ScoreboardEndpoint](scoreboard)
+        .extract[ScoreboardRawResponse]
+        .toScoreboardResponse
+
+
   private def parseResponse(response: CloseableHttpResponse): String = {
     val is = response.getEntity.getContent
     Source.fromInputStream(is).getLines().mkString(" ")

@@ -12,9 +12,9 @@ sealed trait Parameter {
 }
 
 sealed trait YesNoParameter extends Parameter {
-  def Yes = newParameterValue("Y")
+  def Yes: ParameterValue = newParameterValue("Y")
 
-  def No = newParameterValue("N")
+  def No: ParameterValue = newParameterValue("N")
 
   override def defaultParameterValue: ParameterValue = No
 }
@@ -116,6 +116,10 @@ object GameIdParameter extends Parameter {
   override val parameterName: String = "GameID"
 }
 
+object GameDateParameter extends Parameter {
+  override val parameterName: String = "GameDate"
+}
+
 object StartPeriodParameter extends NumericParameter {
   override val parameterName: String = "StartPeriod"
 }
@@ -164,6 +168,10 @@ object DateToParameter extends Parameter {
   override val parameterName: String = "DateTo"
 }
 
+object DayOffsetParameter extends NumericParameter {
+  override val parameterName: String = "DayOffset"
+}
+
 object GameSegmentParameter extends Parameter {
   override val parameterName: String = "GameSegment"
 
@@ -209,17 +217,17 @@ object PaceAdjustParameter extends YesNoParameter {
 object PerModeParameter extends Parameter {
   override val parameterName: String = "PerMode"
 
-  val Totals = newParameterValue("Totals")
-  val MinutesPer = newParameterValue("MinutesPer")
-  val Per48 = newParameterValue("Per48")
-  val Per40 = newParameterValue("Per40")
-  val Per36 = newParameterValue("Per36")
-  val PerGame = newParameterValue("PerGame")
-  val PerMinute = newParameterValue("PerMinute")
-  val PerPossession = newParameterValue("PerPossession")
-  val PerPlay = newParameterValue("PerPlay")
-  val Per100Possessions = newParameterValue("Per100Possessions")
-  val Per100Plays = newParameterValue("Per100Plays")
+  val Totals: ParameterValue = newParameterValue("Totals")
+  val MinutesPer: ParameterValue = newParameterValue("MinutesPer")
+  val Per48: ParameterValue = newParameterValue("Per48")
+  val Per40: ParameterValue = newParameterValue("Per40")
+  val Per36: ParameterValue = newParameterValue("Per36")
+  val PerGame: ParameterValue = newParameterValue("PerGame")
+  val PerMinute: ParameterValue = newParameterValue("PerMinute")
+  val PerPossession: ParameterValue = newParameterValue("PerPossession")
+  val PerPlay: ParameterValue = newParameterValue("PerPlay")
+  val Per100Possessions: ParameterValue = newParameterValue("Per100Possessions")
+  val Per100Plays: ParameterValue = newParameterValue("Per100Plays")
 
   override val defaultParameterValue: ParameterValue = Totals
 }
