@@ -44,7 +44,46 @@ final case class PlayByPlayEvent(gameId: String,
                                  player3TeamId: jl.Integer,
                                  player3TeamCity: String,
                                  player3TeamNickname: String,
-                                 player3TeamAbbreviation: String) extends ConvertedResultSetResponse
+                                 player3TeamAbbreviation: String) extends ConvertedResultSetResponse {
+
+  override def toString: String = {
+    s"""
+       |gameId: $gameId,
+       |eventNumber: $eventNumber,
+       |eventMessageType: $eventMessageType,
+       |eventActionType: $eventActionType,
+       |period: $period,
+       |wcTimeString: $wcTimeString,
+       |pcTimeString: $pcTimeString,
+       |homeDescription: $homeDescription,
+       |neutralDescription: $neutralDescription,
+       |awayDescription: $awayDescription,
+       |homeScore: $homeScore,
+       |awayScore: $awayScore,
+       |player1Type: $player1Type,
+       |player1Id: $player1Id,
+       |player1Name: $player1Name,
+       |player1TeamId: $player1TeamId,
+       |player1TeamCity: $player1TeamCity,
+       |player1TeamNickname: $player1TeamNickname,
+       |player1TeamAbbreviation: $player1TeamAbbreviation,
+       |player2Type: $player2Type,
+       |player2Id: $player2Id,
+       |player2Name: $player2Name,
+       |player2TeamId: $player2TeamId,
+       |player2TeamCity: $player2TeamCity,
+       |player2TeamNickname: $player2TeamNickname,
+       |player2TeamAbbreviation: $player2TeamAbbreviation,
+       |player3Type: $player3Type,
+       |player3Id: $player3Id,
+       |player3Name: $player3Name,
+       |player3TeamId: $player3TeamId,
+       |player3TeamCity: $player3TeamCity,
+       |player3TeamNickname: $player3TeamNickname,
+       |player3TeamAbbreviation: $player3TeamAbbreviation
+     """.stripMargin
+  }
+}
 
 private[rrdinsights] case object PlayByPlayEventConverter extends ResultSetRawResponseConverter[PlayByPlayEvent] {
   override val name: String = "PlayByPlay"

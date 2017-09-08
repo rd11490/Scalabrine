@@ -3,7 +3,7 @@ package com.rrdinsights.scalabrine.utils
 /**
   * From David Pollak's Control Structure.
   */
-object Control {
+private[scalabrine] object Control {
 
   /**
     *
