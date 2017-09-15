@@ -72,8 +72,13 @@ object ScalabrineClient {
 
   def getScoreboard(scoreboard: ScoreboardEndpoint): ScoreboardResponse =
     get[ScoreboardEndpoint](scoreboard)
-        .extract[ScoreboardRawResponse]
-        .toScoreboardResponse
+      .extract[ScoreboardRawResponse]
+      .toScoreboardResponse
+
+  def getShotChart(shotchart: ShotChartDetailEndpoint): ShotChartDetailsResponse =
+    get[ShotChartDetailEndpoint](shotchart)
+      .extract[ShotChartDetailsRawResponse]
+      .toShotChartDetailsResponse
 
 
   private def parseResponse(response: CloseableHttpResponse): String = {
