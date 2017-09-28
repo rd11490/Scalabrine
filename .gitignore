@@ -2,3 +2,5 @@
 *.log
 *.lst
 target
+*.iml
+.idea

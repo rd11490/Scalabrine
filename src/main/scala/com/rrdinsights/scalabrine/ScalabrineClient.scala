@@ -33,7 +33,15 @@ object ScalabrineClient {
     using(httpClient) { client =>
       val resp = endpoint.get(client)
       val parsedResp = parseResponse(resp)
-      val parsed = parse(parsedResp, useBigDecimalForDouble = true)
+      val parsed = try {
+        parse(parsedResp, useBigDecimalForDouble = true)
+      } catch {
+        case e: Throwable =>
+          println(endpoint.url)
+          println(parsedResp)
+          println(e)
+          throw e
+      }
       resp.close()
       parsed
     }

@@ -68,7 +68,7 @@ object SeasonTypeParameter extends Parameter {
   override val defaultParameterValue: ParameterValue = RegularSeason
 }
 
-object TeamIdParameter extends Parameter {
+object TeamIdParameter extends NumericParameter {
   override val parameterName: String = "TeamID"
 
   val AtlantaHawks: ParameterValue = newParameterValue("1610612737")
@@ -108,8 +108,6 @@ object TeamIdParameter extends Parameter {
     LosAngelesLakers, MemphisGrizzlies, MiamiHeat, MilwaukeeBucks, MinnesotaTimberwolves, NewOrleansPelicans,
     NewYorkKnicks, OklahomaCityThunder, OrlandoMagic, Philadelphia76ers, PhoenixSuns, PortlandTrailBlazers,
     SacramentoKings, SanAntonioSpurs, TorontoRaptors, UtahJazz, WashingtonWizards)
-
-  override val defaultParameterValue: ParameterValue = newParameterValue("0")
 }
 
 object GameIdParameter extends Parameter {
@@ -120,7 +118,7 @@ object GameDateParameter extends Parameter {
   override val parameterName: String = "GameDate"
 }
 
-object StartPeriodParameter extends NumericParameter {
+object StartPeriodParameter extends Parameter {
   override val parameterName: String = "StartPeriod"
 }
 
@@ -192,11 +190,8 @@ object MonthParameter extends NumericParameter {
   override val parameterName: String = "Month"
 }
 
-object OpponentTeamIdParameter extends Parameter {
-
+object OpponentTeamIdParameter extends NumericParameter {
   override val parameterName: String = "OpponentTeamID"
-
-  override val defaultParameterValue: ParameterValue = TeamIdParameter.defaultParameterValue
 }
 
 object OutcomeParameter extends Parameter {

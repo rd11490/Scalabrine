@@ -19,7 +19,7 @@ final case class Player(teamId: jl.Integer,
                         height: String,
                         weight: String,
                         birthDate: String,
-                        age: jl.Integer,
+                        age: jl.Double,
                         experience: String,
                         school: String,
                         playerId: jl.Integer) extends ConvertedResultSetResponse
@@ -38,7 +38,7 @@ private[rrdinsights] case object PlayerConverter extends ResultSetRawResponseCon
       transformToString(row(6)),
       transformToString(row(7)),
       transformToString(row(8)),
-      transformToInt(row(9)),
+      transformToDouble(row(9)),
       transformToString(row(10)),
       transformToString(row(11)),
       transformToInt(row(12))))
@@ -52,7 +52,7 @@ final case class Coach(teamId: jl.Integer,
                        lastName: String,
                        coachName: String,
                        coachCode: String,
-                       isAssistant: Boolean,
+                       isAssistant: jl.Boolean,
                        coachType: String,
                        school: String) extends ConvertedResultSetResponse
 
@@ -68,7 +68,7 @@ private[rrdinsights] case object CoachConverter extends ResultSetRawResponseConv
       transformToString(row(4)),
       transformToString(row(5)),
       transformToString(row(6)),
-      transformToInt(row(7)).equals(1),
+      !transformToDouble(row(7)).equals(1.0),
       transformToString(row(8)),
       transformToString(row(9))))
 }

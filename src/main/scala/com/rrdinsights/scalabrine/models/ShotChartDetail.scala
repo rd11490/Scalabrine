@@ -7,7 +7,7 @@ final case class ShotChartDetails(shots: Seq[Shot],
                                   leagueAverages: Seq[ShotAverages])
 
 final case class ShotChartDetailsResponse(resource: String,
-                                     teamGameLog: ShotChartDetails)
+                                          teamGameLog: ShotChartDetails)
 
 final case class Shot(gridType: String,
                       gameId: String,
@@ -24,6 +24,7 @@ final case class Shot(gridType: String,
                       shotZoneBasic: String,
                       shotZoneArea: String,
                       shotZoneRange: String,
+                      shotType: String,
                       shotDistance: jl.Integer,
                       xCoordinate: jl.Integer,
                       yCoordinate: jl.Integer,
@@ -53,14 +54,15 @@ private[rrdinsights] case object ShotConverter extends ResultSetRawResponseConve
       transformToString(row(12)),
       transformToString(row(13)),
       transformToString(row(14)),
-      transformToInt(row(15)),
+      transformToString(row(15)),
       transformToInt(row(16)),
       transformToInt(row(17)),
       transformToInt(row(18)),
       transformToInt(row(19)),
-      transformToString(row(20)),
+      transformToInt(row(20)),
       transformToString(row(21)),
-      transformToString(row(22))))
+      transformToString(row(22)),
+      transformToString(row(23))))
 }
 
 final case class ShotAverages(gridType: String,

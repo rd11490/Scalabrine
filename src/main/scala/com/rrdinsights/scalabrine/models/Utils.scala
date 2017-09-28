@@ -4,7 +4,14 @@ import java.{lang => jl}
 
 private[models] object Utils {
   def transformToT[T](value: Any): T =
-    value.asInstanceOf[T]
+    try {
+      value.asInstanceOf[T]
+    } catch {
+      case e: Throwable =>
+        println(value)
+        println(e)
+        throw e
+    }
 
   def transformToString(value: Any): String = {
     val transformed = transformToT[String](value)
@@ -12,8 +19,16 @@ private[models] object Utils {
   }
 
   def transformToInt(value: Any): jl.Integer = {
-    val transformed = transformToT[BigInt](value)
-    if (transformed != null) jl.Integer.valueOf(transformed.intValue()) else null
+    try {
+      val transformed = transformToT[BigInt](value)
+      if (transformed != null) jl.Integer.valueOf(transformed.intValue()) else null
+    } catch {
+      case e: Throwable =>
+        println(value)
+        println(e)
+        throw e
+    }
+
   }
 
   def transformToDouble(value: Any): jl.Double = {
