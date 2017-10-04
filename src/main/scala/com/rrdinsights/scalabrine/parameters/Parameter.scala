@@ -118,7 +118,7 @@ object GameDateParameter extends Parameter {
   override val parameterName: String = "GameDate"
 }
 
-object StartPeriodParameter extends Parameter {
+object StartPeriodParameter extends NumericParameter {
   override val parameterName: String = "StartPeriod"
 }
 
