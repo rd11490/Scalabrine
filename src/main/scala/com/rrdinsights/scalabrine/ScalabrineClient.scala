@@ -88,6 +88,15 @@ object ScalabrineClient {
       .extract[ShotChartDetailsRawResponse]
       .toShotChartDetailsResponse
 
+  def getBasicSplitsPerPos(splits: PlayerBasicSplitsEndpoint): PlayerBasicSplitsResponse =
+    get[PlayerBasicSplitsEndpoint](splits)
+    .extract[PlayerBasicSplitsRawResponse]
+    .toPlayerBasicSplitsResponse
+
+  def getPlayerProfileTotals(playerProfile: PlayerProfileEndpoint): PlayerProfileResponse =
+    get[PlayerProfileEndpoint](playerProfile)
+    .extract[PlayerProfileRawResponse]
+    .toPlayerProfileResponse
 
   private def parseResponse(response: CloseableHttpResponse): String = {
     val is = response.getEntity.getContent

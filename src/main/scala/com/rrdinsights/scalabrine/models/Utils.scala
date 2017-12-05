@@ -19,19 +19,29 @@ private[models] object Utils {
   }
 
   def transformToInt(value: Any): jl.Integer = {
+    val transformed = transformToT[BigInt](value)
+    if (transformed != null) jl.Integer.valueOf(transformed.intValue()) else null
+  }
+
+  def transformToIntOrDouble(value: Any): jl.Double = {
     try {
-      val transformed = transformToT[BigInt](value)
-      if (transformed != null) jl.Integer.valueOf(transformed.intValue()) else null
+      val transformed = transformToInt(value)
+      if (transformed != null) jl.Double.valueOf(transformed.doubleValue()) else null
     } catch {
       case e: Throwable =>
-        println(value)
-        println(e)
-        throw e
+        try {
+          transformToDouble(value)
+        } catch {
+          case t: Throwable =>
+            println(value)
+            println(t)
+            throw t
+        }
     }
 
   }
 
-  def transformToDouble(value: Any): jl.Double = {
+  def transformToDouble(value: Any, suppress: Boolean = false): jl.Double = {
     val transformed = transformToT[BigDecimal](value)
     if (transformed != null) jl.Double.valueOf(transformed.doubleValue()) else null
   }

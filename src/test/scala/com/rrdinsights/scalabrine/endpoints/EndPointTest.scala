@@ -330,4 +330,22 @@ final class EndPointTest extends TestSpec {
     assert(parsedResponse.scoreboard.easternConferenceStandings.size === 15)
     assert(parsedResponse.scoreboard.westernConferenceStandings.size === 15)
   }
+
+  ignore("test basic splits") {
+    val endpoint = PlayerBasicSplitsEndpoint(PlayerIdParameter.newParameterValue("203114"), SeasonParameter.Season201718)
+    val parsedResponse = ScalabrineClient.getBasicSplitsPerPos(endpoint)
+
+    println(endpoint.url)
+
+    println(parsedResponse.playerBasicSplits.career.map(_.freeThrowPercentage).orNull)
+  }
+
+  ignore("test player profile") {
+    val endpoint = PlayerProfileEndpoint(PlayerIdParameter.newParameterValue("203114"))
+    val parsedResponse = ScalabrineClient.getPlayerProfileTotals(endpoint)
+
+    println(endpoint.url)
+
+    println(parsedResponse.playerProfile.careerTotals.map(_.freeThrowPercent).orNull)
+  }
 }

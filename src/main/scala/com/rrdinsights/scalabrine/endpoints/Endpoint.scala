@@ -142,8 +142,8 @@ final case class ShotChartDetailEndpoint(playerId: ParameterValue,
 }
 
 final case class CommonTeamRosterEndpoint(teamId: ParameterValue,
-                                  season: ParameterValue,
-                                  leagueId: ParameterValue = LeagueIdParameter.defaultParameterValue) extends Endpoint {
+                                          season: ParameterValue,
+                                          leagueId: ParameterValue = LeagueIdParameter.defaultParameterValue) extends Endpoint {
 
   override val endpoint: String = "commonteamroster"
 
@@ -157,6 +157,66 @@ final case class ScoreboardEndpoint(gameDate: ParameterValue,
   override val endpoint: String = "scoreboardv2"
 
   override val params: Seq[ParameterValue] = Seq(gameDate, leagueId, dayOffset)
+}
+
+final case class PlayerBasicSplitsEndpoint(playerId: ParameterValue,
+                                           season: ParameterValue,
+                                           perMode: ParameterValue = PerModeParameter.PerPossession,
+                                           plusMinis: ParameterValue = PlusMinusParameter.defaultParameterValue,
+                                           paceAdjusted: ParameterValue = PaceAdjustParameter.defaultParameterValue,
+                                           rank: ParameterValue = RankParameter.defaultParameterValue,
+                                           leagueId: ParameterValue = LeagueIdParameter.defaultParameterValue,
+                                           seasonType: ParameterValue = SeasonTypeParameter.defaultParameterValue,
+                                           playOffRound: ParameterValue = PlayOffRoundParameter.defaultParameterValue,
+                                           outcome: ParameterValue = OutcomeParameter.defaultParameterValue,
+                                           location: ParameterValue = LocationParameter.defaultParameterValue,
+                                           month: ParameterValue = MonthParameter.defaultParameterValue,
+                                           seasonSegment: ParameterValue = SeasonSegmentParameter.defaultParameterValue,
+                                           dateFrom: ParameterValue = DateFromParameter.defaultParameterValue,
+                                           dateTo: ParameterValue = DateToParameter.defaultParameterValue,
+                                           opponentTeamId: ParameterValue = OpponentTeamIdParameter.defaultParameterValue,
+                                           vsConference: ParameterValue = VsConferenceParameter.defaultParameterValue,
+                                           vsDivision: ParameterValue = VsDivisionParameter.defaultParameterValue,
+                                           gameSegment: ParameterValue = GameSegmentParameter.defaultParameterValue,
+                                           period: ParameterValue = PeriodParameter.defaultParameterValue,
+                                           shotClockRange: ParameterValue = ShotClockRangeParameter.defaultParameterValue,
+                                           lastNGames: ParameterValue = LastNGamesParameter.defaultParameterValue) extends Endpoint {
+  override val endpoint: String = "playerdashboardbyyearoveryear"
+
+  override val params: Seq[ParameterValue] = Seq(
+    MeasureTypeParameter.Base,
+    playerId,
+    season,
+    perMode,
+    plusMinis,
+    paceAdjusted,
+    rank,
+    leagueId,
+    seasonType,
+    playOffRound,
+    outcome,
+    location,
+    month,
+    seasonSegment,
+    dateFrom,
+    dateTo,
+    opponentTeamId,
+    vsConference,
+    vsDivision,
+    gameSegment,
+    period,
+    shotClockRange,
+    lastNGames)
+
+}
+
+final case class PlayerProfileEndpoint(playerId: ParameterValue,
+                                       perMode: ParameterValue = PerModeParameter.Totals,
+                                       leagueId: ParameterValue = LeagueIdParameter.defaultParameterValue) extends Endpoint {
+
+  override val endpoint: String = "playerprofilev2"
+
+  override val params: Seq[ParameterValue] = Seq(playerId, leagueId, perMode)
 }
 
 /*

@@ -47,6 +47,7 @@ object LeagueIdParameter extends Parameter {
 object SeasonParameter extends Parameter {
   override val parameterName: String = "Season"
 
+  val Season201718: ParameterValue = newParameterValue("2017-18")
   val Season201617: ParameterValue = newParameterValue("2016-17")
   val Season201516: ParameterValue = newParameterValue("2015-16")
   val Season201415: ParameterValue = newParameterValue("2014-15")
@@ -120,6 +121,8 @@ object GameDateParameter extends Parameter {
 
 object StartPeriodParameter extends NumericParameter {
   override val parameterName: String = "StartPeriod"
+
+  override val defaultParameterValue: ParameterValue = newParameterValue("1")
 }
 
 object StartRangeParameter extends NumericParameter {
