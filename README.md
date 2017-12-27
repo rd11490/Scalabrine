@@ -1,5 +1,5 @@
 # Scalabrine
-
+This is a scala client for the stats.nba data endpoints. It is currently a work in progress, so feel free to request support for additional endpoints.
 
 ### To Include 
 
@@ -14,9 +14,12 @@
 </dependency>
 ```
 
-### To Use
+### Example
 
 ```
+import com.rrdinsights.scalabrine.parameters._
+import com.rrdinsights.scalabrine.ScalabrineClient
+
 val teamId = TeamIdParameter.MiamiHeat
 val season = SeasonParameter.Season201617
 val teamGameLog = TeamGameLogEndpoint(teamId, season)
