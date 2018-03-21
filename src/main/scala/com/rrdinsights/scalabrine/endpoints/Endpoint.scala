@@ -219,22 +219,86 @@ final case class PlayerProfileEndpoint(playerId: ParameterValue,
   override val params: Seq[ParameterValue] = Seq(playerId, leagueId, perMode)
 }
 
+
+///
+/// Euro
+///
+
 /*
-http://stats.nba.com/stats/shotchartdetail?Period=0&VsConference=&LeagueID=00&LastNGames=0&TeamID=0&Position=&Location=&Outcome=&ContextMeasure=FGA&DateFrom=&StartPeriod=&DateTo=&OpponentTeamID=0&ContextFilter=&RangeType=&Season=&AheadBehind=&PlayerID=201935&EndRange=&VsDivision=&PointDiff=&RookieYear=&GameSegment=&Month=0&ClutchTime=&StartRange=&EndPeriod=&SeasonType=Regular+Season&SeasonSegment=&GameID=&PlayerPosition=
+Adriatic League
+http://www.aba-liga.com/live-match/rezultati-1718/create_shooting_chart.php?id=87&sez=17&lea=1
+[{"ekipa":"2","koordinata_x":"83","koordinata_y":"68","koordinata_uspeh":"1","player_name":"Marko Ljubi\u010di\u0107"}]
+
+
+ */
+
+/*
+Players
+http://live.euroleague.net/api/Players?seasoncode=E2017&temp=E2017&equipo=IST&gamecode=1
+
+Play By Play
+http://livex/api/PlayByPlay?gamecode=3&seasoncode=E2017
+{
+    "Live": false,
+    "TeamA": "CSKA Moscow",
+    "TeamB": "AX Armani Exchange Olimpia Milan",
+    "CodeTeamA": "CSK       ",
+    "CodeTeamB": "MIL       ",
+    "ActualQuarter": 4,
+    "FirstQuarter": [
+        {
+            "TYPE": 0,
+            "NUMBEROFPLAY": 2,
+            "CODETEAM": "          ",
+            "PLAYER_ID": "          ",
+            "PLAYTYPE": "BP",
+            "PLAYER": null,
+            "TEAM": null,
+            "DORSAL": null,
+            "MINUTE": 1,
+            "MARKERTIME": "",
+            "POINTS_A": null,
+            "POINTS_B": null,
+            "COMMENT": "",
+            "PLAYINFO": "Begin Period"
+        }],
+        "SecondQuarter": [],
+        "ThirdQuarter": [],
+        "FourthQuarter": [],
+        "ExtraTime": []
+        ""
+
  */
 /*
-GET /stats/commonplayerinfo?LeagueID=00&PlayerID=201566&SeasonType=Regular+Season HTTP/1.1
-Host: stats.nba.com
-Connection: keep-alive
-Accept: application/json, text/plain,
-x-nba-stats-token: true
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36
-x-nba-stats-origin: stats
-Referer: http://stats.nba.com/player/
-Accept-Encoding: gzip, deflate, sdch
-Accept-Language: en-US,en;q=0.8
-Cookie: s_cc=true; s_fid=03B29E44EE8A4F10-355A5B7D5EFB9D1C; s_sq=nbag-n-league%3D%2526pid%253Dstats.nba.com%25253A%25252Fplayers%25252F%2526pidt%253D1%2526oid%253Dhttp%25253A%25252F%25252Fstats.nba.com%25252Fplayer%25252F%252523%252521%25252F201566%2526ot%253DA
-*/
+Shots:
+
+http://live.euroleague.net/api/Points?gamecode=3&seasoncode=E2017
+
+[{
+"NUM_ANOT": 562,
+"TEAM": "CSK       ",
+"ID_PLAYER": "PCVM      ",
+"PLAYER": "RODRIGUEZ, SERGIO",
+"ID_ACTION": "3FGA",
+"ACTION": "Missed Three Pointer",
+"POINTS": 0,
+"COORD_X": 207,
+"COORD_Y": 683,
+"ZONE": "I",
+"FASTBREAK": "0",
+"SECOND_CHANCE": "0",
+"POINTS_OFF_TURNOVER": "0",
+"MINUTE": 40,
+"CONSOLE": "00:57",
+"POINTS_A": 89,
+"POINTS_B": 82
+}]
+ */
+
+
+///
+/// NBA
+///
 
 /*
 GET /stats/playerdashboardbyyearoveryear?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerID=201566&PlusMinus=N&Rank=N&Season=2016-17&SeasonSegment=&SeasonType=Playoffs&ShotClockRange=&Split=yoy&VsConference=&VsDivision= HTTP/1.1
@@ -377,36 +441,6 @@ Accept-Language: en-US,en;q=0.8
 Cookie: s_cc=true; s_fid=03B29E44EE8A4F10-355A5B7D5EFB9D1C; s_sq=nbag-n-league%3D%2526pid%253Dstats.nba.com%25253A%25252Fteam%25252F%2526pidt%253D1%2526oid%253Dhttp%25253A%25252F%25252Fstats.nba.com%25252Fteam%25252F%252523%252521%25252F1610612738%25252Fplayers-traditional%25252F%2526ot%253DA
 */
 
-/*
-GET /stats/teamgamelog?DateFrom=&DateTo=&LeagueID=00&Season=2016-17&SeasonType=Playoffs&TeamID=1610612738 HTTP/1.1
-Host: stats.nba.com
-Connection: keep-alive
-Accept: application/json, text/plain,
-x-nba-stats-token: true
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36
-x-nba-stats-origin: stats
-Referer: http://stats.nba.com/team/
-Accept-Encoding: gzip, deflate, sdch
-Accept-Language: en-US,en;q=0.8
-Cookie: s_cc=true; s_fid=03B29E44EE8A4F10-355A5B7D5EFB9D1C; s_sq=nbag-n-league%3D%2526pid%253Dstats.nba.com%25253A%25252Fteam%25252F%2526pidt%253D1%2526oid%253Dhttp%25253A%25252F%25252Fstats.nba.com%25252Fteam%25252F%252523%252521%25252F1610612738%25252Fboxscores%2526ot%253DA
-
-
-*/
-
-/*
-GET /stats/teamgamelogs?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season=2016-17&SeasonSegment=&SeasonType=Playoffs&ShotClockRange=&TeamID=1610612738&VsConference=&VsDivision= HTTP/1.1
-Host: stats.nba.com
-Connection: keep-alive
-Accept: application/json, text/plain,
-x-nba-stats-token: true
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36
-x-nba-stats-origin: stats
-Referer: http://stats.nba.com/team/
-Accept-Encoding: gzip, deflate, sdch
-Accept-Language: en-US,en;q=0.8
-Cookie: s_cc=true; s_fid=03B29E44EE8A4F10-355A5B7D5EFB9D1C; s_sq=%5B%5BB%5D%5D
-
-*/
 
 /*
 GET /stats/teamdashptshots?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PaceAdjust=N&PerMode=PerGame&Period=0&PlusMinus=N&Rank=N&Season=2016-17&SeasonSegment=&SeasonType=Playoffs&TeamID=1610612738&VsConference=&VsDivision= HTTP/1.1
@@ -462,21 +496,6 @@ Referer: http://stats.nba.com/game/
 Accept-Encoding: gzip, deflate, sdch
 Accept-Language: en-US,en;q=0.8
 Cookie: s_cc=true; s_fid=03B29E44EE8A4F10-355A5B7D5EFB9D1C; s_sq=%5B%5BB%5D%5D
-*/
-
-/*
-GET /stats/playbyplayv2?EndPeriod=10&EndRange=55800&GameID=0021601219&RangeType=2&Season=2016-17&SeasonType=Regular+Season&StartPeriod=1&StartRange=0 HTTP/1.1
-Host: stats.nba.com
-Connection: keep-alive
-Accept: application/json, text/plain,
-x-nba-stats-token: true
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36
-x-nba-stats-origin: stats
-Referer: http://stats.nba.com/game/
-Accept-Encoding: gzip, deflate, sdch
-Accept-Language: en-US,en;q=0.8
-Cookie: s_cc=true; s_fid=03B29E44EE8A4F10-355A5B7D5EFB9D1C; s_sq=%5B%5BB%5D%5D
-
 */
 
 /*

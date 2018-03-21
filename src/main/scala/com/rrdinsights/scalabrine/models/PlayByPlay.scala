@@ -135,7 +135,7 @@ private[rrdinsights] case object PlayByPlayEventConverter extends ResultSetRawRe
 
   private def convertScoreString(score: String): (jl.Integer, jl.Integer) = {
     val splitScore = Option(score).map(_.split("-"))
-    (splitScore.map(v => Integer.valueOf(v(0).trim)).orNull, splitScore.map(v => Integer.valueOf(v(0).trim)).orNull)
+    (splitScore.map(v => Integer.valueOf(v(0).trim)).orNull, splitScore.map(v => Integer.valueOf(v(1).trim)).orNull)
   }
 }
 

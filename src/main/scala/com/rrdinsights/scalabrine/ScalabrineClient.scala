@@ -4,7 +4,7 @@ import com.rrdinsights.scalabrine.endpoints._
 import com.rrdinsights.scalabrine.models._
 import com.rrdinsights.scalabrine.parameters.Headers
 import com.rrdinsights.scalabrine.utils.Control._
-import org.apache.http.client.config.RequestConfig
+import org.apache.http.client.config.{CookieSpecs, RequestConfig}
 import org.apache.http.client.methods.CloseableHttpResponse
 import org.apache.http.impl.client.HttpClientBuilder
 import org.json4s.jackson.JsonMethods._
@@ -19,8 +19,9 @@ object ScalabrineClient {
   implicit val formats: DefaultFormats.type = DefaultFormats
 
   private def get[E <: Endpoint](endpoint: E): JValue = {
-    val httpParams = RequestConfig.custom().
-      setConnectionRequestTimeout(20000)
+    val httpParams = RequestConfig.custom()
+      .setCookieSpec(CookieSpecs.IGNORE_COOKIES)
+      .setConnectionRequestTimeout(20000)
       .setSocketTimeout(20000)
       .setConnectTimeout(20000)
       .build()

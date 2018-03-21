@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.rrdinsights.scalabrine</groupId>
     <artifactId>scalabrine</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <inceptionYear>2017</inceptionYear>
 
     <licenses>
@@ -24,8 +24,8 @@
 
 
     <properties>
-        <scala.version.prefix>2.11</scala.version.prefix>
-        <scala.version>${scala.version.prefix}.11</scala.version>
+        <scala.version.prefix>2.12</scala.version.prefix>
+        <scala.version>${scala.version.prefix}.4</scala.version>
         <java.version>1.8</java.version>
     </properties>
 
@@ -48,18 +48,28 @@
     <dependencies>
         <dependency>
             <groupId>org.scala-lang</groupId>
+            <artifactId>scala-compiler</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-reflect</artifactId>
             <version>${scala.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.2</version>
+            <version>4.5.5</version>
         </dependency>
         <dependency>
             <groupId>org.json4s</groupId>
             <artifactId>json4s-jackson_${scala.version.prefix}</artifactId>
-            <version>3.5.2</version>
+            <version>3.6.0-M2</version>
         </dependency>
         <!--- Test Dependencies Below-->
         <dependency>
@@ -76,7 +86,7 @@
         <dependency>
             <groupId>org.scalatest</groupId>
             <artifactId>scalatest_${scala.version.prefix}</artifactId>
-            <version>3.0.1</version>
+            <version>3.0.5</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
