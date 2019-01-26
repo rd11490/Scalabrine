@@ -39,6 +39,7 @@ object LeagueIdParameter extends Parameter {
   override val parameterName: String = "LeagueID"
 
   val NBA: ParameterValue = newParameterValue("00")
+  val WNBA: ParameterValue = newParameterValue("10")
   val DLeague: ParameterValue = newParameterValue("20")
 
   override val defaultParameterValue: ParameterValue = NBA

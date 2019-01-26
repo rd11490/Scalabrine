@@ -57,6 +57,8 @@ final case class BoxScoreEndpoint(gameId: ParameterValue) extends Endpoint {
 // Advanced Box Score
 //
 final case class AdvancedBoxScoreEndpoint(gameId: ParameterValue,
+                                          season: ParameterValue,
+                                          seasonType: ParameterValue = SeasonTypeParameter.defaultParameterValue,
                                           startPeriod: ParameterValue = StartPeriodParameter.defaultParameterValue,
                                           endPeriod: ParameterValue = EndPeriodParameter.defaultParameterValue,
                                           startRange: ParameterValue = StartRangeParameter.defaultParameterValue,
@@ -64,7 +66,7 @@ final case class AdvancedBoxScoreEndpoint(gameId: ParameterValue,
                                           rangeType: ParameterValue = RangeTypeParameter.defaultParameterValue) extends Endpoint {
   override val endpoint: String = "boxscoreadvancedv2"
 
-  override val params: Seq[ParameterValue] = Seq(gameId, startPeriod, endPeriod, startRange, endRange, rangeType)
+  override val params: Seq[ParameterValue] = Seq(gameId, startPeriod, endPeriod, startRange, endRange, rangeType, season, seasonType)
 }
 
 //

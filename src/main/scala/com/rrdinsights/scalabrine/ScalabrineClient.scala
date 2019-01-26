@@ -20,7 +20,7 @@ object ScalabrineClient {
 
   private def get[E <: Endpoint](endpoint: E): JValue = {
     val httpParams = RequestConfig.custom()
-      .setCookieSpec(CookieSpecs.IGNORE_COOKIES)
+      .setCookieSpec(CookieSpecs.STANDARD)
       .setConnectionRequestTimeout(20000)
       .setSocketTimeout(20000)
       .setConnectTimeout(20000)
