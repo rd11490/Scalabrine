@@ -199,8 +199,10 @@ final class EndPointTest extends TestSpec {
   }
 
   ignore("boxscore advanced endpoint") {
-    val param = GameIdParameter.newParameterValue(GameID)
-    val boxScore = AdvancedBoxScoreEndpoint(param)
+    val game = GameIdParameter.newParameterValue(GameID)
+    val season = GameIdParameter.newParameterValue(GameID)
+
+    val boxScore = AdvancedBoxScoreEndpoint(gameId = game, season = season)
     val parsedResponse = ScalabrineClient.getAdvancedBoxScore(boxScore)
 
     // resource
